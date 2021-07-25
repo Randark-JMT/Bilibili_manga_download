@@ -8,7 +8,7 @@
 #### 1、下载源码
 运行环境为：Python 3.x <br />
 在cmd、powershell或BASH中输入此代码安装依赖：```pip3 install -r  requirements.txt```<br />
-执行 ```python3 main.py```来运行程序
+然后执行 ```python3 main.py```来运行程序
 #### 2、直接运行exe版本
 待构建
 ## 使用方法

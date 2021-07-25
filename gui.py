@@ -16,7 +16,7 @@ class MainGUI:
         # window.geometry('500x300')
         manga_window.minsize(800, 600)  # 最小尺寸
         manga_window.maxsize(800, 600)  # 最大尺寸
-        manga_window.title('Bilibili漫画下载    V1.1    Mox.moe内部使用')
+        manga_window.title('Bilibili漫画下载    V1.1    仅限Mox内部使用')
         balloon_massage = tix.Balloon(w)
         # 窗口元素对齐
         gui_interval_left: int = 25

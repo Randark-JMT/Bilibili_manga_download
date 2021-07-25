@@ -51,7 +51,7 @@ class MainGUI:
         self.manga_range_label.place(x=gui_interval_left, y=gui_interval_up + gui_interval_each * 2)
         self.manga_range_entry = tix.Entry(manga_window, show=None, font=('Arial', 14), exportselection=0, width=25)
         self.manga_range_entry.place(x=180, y=gui_interval_up + gui_interval_each * 2)
-        balloon_massage.bind_widget(self.manga_range_entry, balloonmsg='输入0为下载全部，单章直接输入，连续下载用“-”，可用逗号，\n如“12，16-18”表示下载12，16，17，18话')
+        balloon_massage.bind_widget(self.manga_range_entry, balloonmsg='输入0为下载全部，单章直接输入，连续下载用“-”，可用逗号隔开，\n如“12，16-18”表示下载12，16，17，18话')
 
         # 控制台输出
         self.manga_range_output = ScrolledText(manga_window, width=111, height=38)

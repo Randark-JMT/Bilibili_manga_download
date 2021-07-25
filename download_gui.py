@@ -55,6 +55,7 @@ def download_gui(id_input: int, download_range: str, sessdata: str, text_output:
             if state:
                 destination = destination * 10 + int(letter)
                 continue
+    # TODO 将范围下载的函数独立出来
     # 检查是否为最后一块
     if frequency == len(download_range):
         if not state:
@@ -83,6 +84,7 @@ def download_manga_all_gui(comic_id: int, text_output: ScrolledText):
         os.makedirs(root_path)
     manga_list = data['ep_list']
     manga_list.reverse()
+    # TODO 日志中尝试增加进度条
     for ep in manga_list:
         # 检查付费章节是否购买
         if not ep['is_locked']:

@@ -63,6 +63,8 @@ class MainGUI:
         manga_range_button = tix.Button(manga_window, width=25, height=3, font=('Arial', 14), command=self.main_gui_start, text='开始', )
         manga_range_button.place(x=500, y=gui_interval_up)
         balloon_massage.bind_widget(manga_range_button, balloonmsg='点击即可开始搜索下载')
+        # 进度条
+        # TODO 在界面增加一个进度条
 
     def quitcmd(self):
         self.exit = 0

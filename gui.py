@@ -7,15 +7,6 @@ TCL_ALL_EVENTS = 0
 
 
 class MainGUI:
-
-    def main_gui_start(self):
-        print(0)
-        # self.manga_range_output.insert("insert", "python\n")
-        sessdata = self.manga_sessdata_entry.get()
-        manga_id = self.manga_id_entry.get()
-        manga_range = self.manga_range_entry.get()
-        download_gui(manga_id, manga_range, sessdata, self.manga_range_output)
-
     def __init__(self, w):
         self.root = w
         self.exit = -1
@@ -66,6 +57,14 @@ class MainGUI:
         # 进度条
         # TODO 在界面增加一个进度条
 
+    # 获取输入数据,开始任务
+    def main_gui_start(self):
+        print(0)
+        # self.manga_range_output.insert("insert", "python\n")
+        sessdata = self.manga_sessdata_entry.get()
+        manga_id = self.manga_id_entry.get()
+        manga_range = self.manga_range_entry.get()
+        download_gui(manga_id, manga_range, sessdata, self.manga_range_output)
     def quitcmd(self):
         self.exit = 0
 

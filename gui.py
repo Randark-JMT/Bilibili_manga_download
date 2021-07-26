@@ -1,7 +1,7 @@
 from tkinter import tix
 # from tkinter import END
 from tkinter.scrolledtext import ScrolledText
-from download_gui import download_gui
+from download_gui import download_main, download_purchase_status
 
 TCL_ALL_EVENTS = 0
 
@@ -21,7 +21,7 @@ class MainGUI:
         # 窗口元素对齐
         gui_interval_left: int = 25
         gui_interval_up: int = 10
-        gui_interval_each: int = 30
+        gui_interval_each: int = 35
 
         # 用户SESSDATA输入框
         self.manga_sessdata_label = tix.Label(manga_window, text='用户SESSDATA=', font=('Arial', 12))
@@ -45,26 +45,44 @@ class MainGUI:
         balloon_massage.bind_widget(self.manga_range_entry, balloonmsg='输入0为下载全部，单章直接输入，连续下载用“-”，可用逗号隔开，\n如“12，16-18”表示下载12，16，17，18话')
 
         # 控制台输出
-        self.manga_range_output = ScrolledText(manga_window, width=111, height=38)
-        self.manga_range_output.place(x=0, y=gui_interval_up + gui_interval_each * 3)
-        # manga_range_output_scroll = tix.Scrollbar(w, orient="vertical", command=manga_range_output.yview, )
-        # manga_range_output_scroll.grid()
+        self.manga_log_output = ScrolledText(manga_window, width=111, height=38, state='disabled')
+        self.manga_log_output.place(x=0, y=gui_interval_up + gui_interval_each * 3)
 
         # 开始按钮
-        manga_range_button = tix.Button(manga_window, width=25, height=3, font=('Arial', 14), command=self.main_gui_start, text='开始', )
-        manga_range_button.place(x=500, y=gui_interval_up)
+        manga_range_button = tix.Button(manga_window, width=20, height=2, font=('Arial', 14), command=self.main_gui_start, text='开始', )
+        manga_range_button.place(x=470, y=gui_interval_up + gui_interval_each)
         balloon_massage.bind_widget(manga_range_button, balloonmsg='点击即可开始搜索下载')
+
+        # 检查购买情况
+        manga_check_button = tix.Button(manga_window, width=27, height=1, font=('Arial', 14), command=self.main_gui_check, text='检查购买', )
+        manga_check_button.place(x=470, y=gui_interval_up - 5)
+        balloon_massage.bind_widget(manga_check_button, balloonmsg='检查购买情况')
+
+        # 中止按钮
+        manga_stop_button = tix.Button(manga_window, width=5, height=2, font=('Arial', 14), command=self.main_gui_stop, text='停止', )
+        manga_stop_button.place(x=710, y=gui_interval_up + gui_interval_each)
+        balloon_massage.bind_widget(manga_stop_button, balloonmsg='STOP')
+
         # 进度条
         # TODO 在界面增加一个进度条
 
     # 获取输入数据,开始任务
     def main_gui_start(self):
-        print(0)
-        # self.manga_range_output.insert("insert", "python\n")
         sessdata = self.manga_sessdata_entry.get()
         manga_id = self.manga_id_entry.get()
         manga_range = self.manga_range_entry.get()
-        download_gui(manga_id, manga_range, sessdata, self.manga_range_output)
+        download_main(manga_id, manga_range, sessdata, self.manga_log_output)
+
+    # 获取输入数据，检查购买情况
+    def main_gui_check(self):
+        sessdata = self.manga_sessdata_entry.get()
+        manga_id = self.manga_id_entry.get()
+        download_purchase_status(manga_id, sessdata, self.manga_log_output)
+
+    # 终止下载
+    def main_gui_stop(self):
+        exit(self.main_gui_start)
+
     def quitcmd(self):
         self.exit = 0
 

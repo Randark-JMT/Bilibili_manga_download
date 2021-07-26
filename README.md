@@ -16,6 +16,7 @@
 ## 待办
 TODO：界面性能优化（下载时界面卡顿）<br />
 TODO：界面添加一个双层进度条
+TODO：换一种界面框架
 ## 其他项目引用
 图片解析部分来自 https://github.com/flaribbit/bilibili-manga-spider <br />
 下载逻辑参考 https://github.com/xuruoyu/bilibili_manga_downloader

@@ -1,5 +1,4 @@
 import os
-import time
 import requests
 import json
 from decode import decode_index_data, get_image_url

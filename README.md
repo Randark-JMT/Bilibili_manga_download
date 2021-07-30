@@ -1,3 +1,4 @@
+![程序图标](https://raw.githubusercontent.com/Randark-JMT/Bilibili_manga_download/dev-tkinker/main.ico "ico")
 # B站漫画下载器
 哔哩哔哩漫画下载工具， 支持范围下载
 ## 项目特点

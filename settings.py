@@ -1,4 +1,5 @@
 download_path = './B站漫画下载'
+cookie_file = './B站漫画下载/cookie.txt'
 url_ImageToken = str('https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web')
 url_GetImageIndex = str('https://manga.bilibili.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web')
 url_GetEpisode = str('https://manga.bilibili.com/twirp/comic.v1.Comic/GetEpisode?device=pc&platform=web')

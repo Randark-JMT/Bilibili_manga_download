@@ -16,7 +16,7 @@ class MainGUI:
         manga_window.wm_protocol("WM_DELETE_WINDOW", lambda self_self=self: self.quitcmd())
         manga_window.minsize(800, 600)  # 最小尺寸
         manga_window.maxsize(800, 600)  # 最大尺寸
-        manga_window.title('Bilibili漫画下载    V1.1    仅限Mox内部使用')
+        manga_window.title('Bilibili漫画下载    V1.2    仅限Mox内部使用')
         balloon_massage = tix.Balloon(w)
         # 窗口元素对齐
         gui_interval_left: int = 25

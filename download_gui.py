@@ -2,7 +2,7 @@ import os
 import requests
 import json
 from decode import decode_index_data, get_image_url
-from settings import download_path, headers
+from settings import download_path, headers, url_ComicDetail, url_GetImageIndex, url_GetEpisode
 from tkinter.scrolledtext import ScrolledText
 from time import sleep
 
@@ -69,8 +69,8 @@ def download_manga_range(comic_id: int, start: int, destination: int, text_outpu
 
 # 全部漫画下载模块
 def download_manga_all(comic_id: int, text_output: ScrolledText):
-    url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
-    res = requests.post(url, json.dumps({"comic_id": comic_id}), headers=headers)
+    # url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
+    res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
     data = json.loads(res.text)['data']
     comic_title = data['title']
     # 漫画下载目录检查&创建
@@ -92,8 +92,8 @@ def download_manga_all(comic_id: int, text_output: ScrolledText):
 
 # 单章节下载模块
 def download_manga_each(comic_id: int, section: int, text_output: ScrolledText):
-    url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
-    res = requests.post(url, json.dumps({"comic_id": comic_id}), headers=headers)
+    # url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
+    res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
     data = json.loads(res.text)['data']
     comic_title = data['title']
     # 漫画下载目录检查&创建
@@ -116,8 +116,8 @@ def download_manga_each(comic_id: int, section: int, text_output: ScrolledText):
 
 # ID~索引下载漫画模块
 def download_manga_episode(episode_id: int, root_path: str, text_output: ScrolledText):
-    url = str('https://manga.bilibili.com/twirp/comic.v1.Comic/GetEpisode?device=pc&platform=web')
-    res = requests.post(url, json.dumps({"id": episode_id}), headers=headers)
+    # url = str('https://manga.bilibili.com/twirp/comic.v1.Comic/GetEpisode?device=pc&platform=web')
+    res = requests.post(url_GetEpisode, json.dumps({"id": episode_id}), headers=headers)
     data = json.loads(res.text)
     # comic_title = data['data']['comic_title']
     short_title = data['data']['short_title']
@@ -127,8 +127,8 @@ def download_manga_episode(episode_id: int, root_path: str, text_output: Scrolle
     main_gui_log_insert('正在下载：' + title + '\n', text_output)
 
     # 获取索引文件cdn位置
-    url = str('https://manga.bilibili.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web')
-    res = requests.post(url, json.dumps({"ep_id": episode_id}), headers=headers)
+    # url = str('https://manga.bilibili.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web')
+    res = requests.post(url_GetImageIndex, json.dumps({"ep_id": episode_id}), headers=headers)
     data = json.loads(res.text)
     index_url = 'https://manga.hdslb.com' + data['data']['path']
     # print('获取索引文件cdn位置:', index_url)
@@ -147,16 +147,16 @@ def download_manga_episode(episode_id: int, root_path: str, text_output: Scrolle
         res = requests.get(url)
         with open(os.path.join(ep_path, str(i + 1).rjust(3, '0') + '.jpg'), 'wb+') as f:
             f.write(res.content)
-            sleep(10)
+            # sleep(10)
             pass
         if i % 4 == 0 and i != 0:
-            sleep(2)
+            sleep(1)
 
 
 # 漫画标题获取
 def download_manga_title(comic_id: int, text_output: ScrolledText):
-    url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
-    res = requests.post(url, json.dumps({"comic_id": comic_id}), headers=headers)
+    # url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
+    res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
     data = json.loads(res.text)['data']
     comic_title = data['title']
     main_gui_log_insert('正在下载的漫画为：' + comic_title + '\n', text_output)
@@ -176,8 +176,8 @@ def download_purchase_status(comic_id: int, sessdata: str, text_output: Scrolled
     # cookie 数据读取
     sessdata = 'SESSDATA=' + sessdata
     headers['cookie'] = sessdata
-    url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
-    res = requests.post(url, json.dumps({"comic_id": comic_id}), headers=headers)
+    # url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
+    res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
     data = json.loads(res.text)['data']
     comic_title = data['title']
     main_gui_log_insert('正在查询漫画：' + comic_title + '的购买情况\n', text_output)

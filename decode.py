@@ -2,7 +2,7 @@ import json
 import numpy as np
 import zipfile
 import io
-
+from settings import url_ImageToken
 # 文件解码
 import requests
 
@@ -48,9 +48,9 @@ def decode_index_data(season_id: int, episode_id: int, buf):
 
 # 单文件链接解析
 def get_image_url(img_url):
-    url = str('https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web')
+    # url = str('https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web')
     # 获取图片token
-    res = requests.post(url, json.dumps({"urls": json.dumps([img_url])}), headers=headers)
+    res = requests.post(url_ImageToken, json.dumps({"urls": json.dumps([img_url])}), headers=headers)
     data = json.loads(res.text)['data'][0]
     url = data['url'] + '?token=' + data['token']
     return url

@@ -3,6 +3,7 @@ from tkinter import tix, StringVar
 from tkinter.scrolledtext import ScrolledText
 from download_gui import download_main, download_purchase_status
 from settings import cookie_file
+from download_gui import main_gui_log_insert
 
 TCL_ALL_EVENTS = 0
 
@@ -94,11 +95,12 @@ class MainGUI:
         sessdata = self.manga_sessdata_entry.get()
         file.write(sessdata)
         file.close()
-        self.sessdata_old = sessdata
+        main_gui_log_insert('cookie数据储存成功\n', self.manga_log_output)
 
     # 终止下载
     def main_gui_stop(self):
-        pass
+        self.destroy()
+        self.exit = 0
 
     def quitcmd(self):
         self.exit = 0

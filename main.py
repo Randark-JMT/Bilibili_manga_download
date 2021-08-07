@@ -10,6 +10,8 @@ if __name__ == '__main__':
         file = open(cookie_file, 'w')
         file.close()
     manga_window = Tk()
+    manga_window.wm_geometry('800x600')
+    manga_window.wm_resizable(False, False)
     balloon = MainGUI(manga_window)
     balloon.mainloop()
     balloon.destroy()

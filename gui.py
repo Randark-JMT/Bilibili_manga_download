@@ -15,8 +15,8 @@ class MainGUI:
         # 窗口建立
         self.manga_window = w.winfo_toplevel()
         self.manga_window.wm_protocol("WM_DELETE_WINDOW", lambda self_self=self: self.quitcmd())
-        self.manga_window.minsize(800, 600)  # 最小尺寸
-        self.manga_window.maxsize(800,600)
+        # self.manga_window.minsize(800, 600)  # 最小尺寸
+        # self.manga_window.maxsize(800,600)
         self.manga_window.title('Bilibili漫画下载    V1.2    仅限Mox内部使用')
         balloon_massage = tix.Balloon(w)
         # 窗口元素对齐

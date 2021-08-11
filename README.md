@@ -1,4 +1,5 @@
 ![程序图标](https://raw.githubusercontent.com/Randark-JMT/Bilibili_manga_download/dev-tkinker/main.ico "ico")
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FRandark-JMT%2FBilibili_manga_download.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FRandark-JMT%2FBilibili_manga_download?ref=badge_shield)
 # B站漫画下载器
 哔哩哔哩漫画下载工具， 支持范围下载
 ## 项目特点
@@ -25,3 +26,7 @@ _准备同步开发一个基于pyQt框架的GUI，也在学_
 ## 其他项目引用
 图片解析部分来自 https://github.com/flaribbit/bilibili-manga-spider <br />
 下载逻辑参考 https://github.com/xuruoyu/bilibili_manga_downloader
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FRandark-JMT%2FBilibili_manga_download.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FRandark-JMT%2FBilibili_manga_download?ref=badge_large)

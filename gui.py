@@ -32,7 +32,7 @@ class MainGUI:
         self.manga_sessdata_label.place(x=gui_interval_left, y=gui_interval_up)
         manga_sessdata_entry_text = StringVar()
         self.manga_sessdata_entry = tix.Entry(self.manga_window, show=None, font=('Arial', 14), exportselection=0, width=25, text='test', textvariable=manga_sessdata_entry_text)
-        self.manga_sessdata_entry.place(x=180, y=gui_interval_up)
+        self.manga_sessdata_entry.place(x=190, y=gui_interval_up)
         balloon_massage.bind_widget(self.manga_sessdata_entry, balloonmsg='从浏览器的开发者工具中获取到的cookie数据')
         file = open(cookie_file, 'r')
         manga_sessdata_entry_text.set(file.read())
@@ -48,9 +48,8 @@ class MainGUI:
         # 漫画章节数据输入框
         self.manga_range_label = tix.Label(self.manga_window, text='下载的章节范围为：', font=('Arial', 12))
         self.manga_range_label.place(x=gui_interval_left, y=gui_interval_up + gui_interval_each * 2)
-        self.manga_range_entry = tix.Entry(self.manga_window, show=None, font=('Arial', 14), exportselection=0,
-                                           width=25)
-        self.manga_range_entry.place(x=180, y=gui_interval_up + gui_interval_each * 2)
+        self.manga_range_entry = tix.Entry(self.manga_window, show=None, font=('Arial', 14), exportselection=0, width=15)
+        self.manga_range_entry.place(x=210, y=gui_interval_up + gui_interval_each * 2)
         balloon_massage.bind_widget(self.manga_range_entry, balloonmsg='输入0为下载全部，单章直接输入，连续下载用“-”，可用逗号隔开，\n如“12，16-18”表示下载12，16，17，18话')
 
         # 控制台输出
@@ -58,23 +57,23 @@ class MainGUI:
         self.manga_log_output.place(x=0, y=gui_interval_up + gui_interval_each * 3)
 
         # 开始按钮
-        manga_range_button = tix.Button(self.manga_window, width=20, height=2, font=('Arial', 14), command=self.main_gui_start, text='开始', )
-        manga_range_button.place(x=470, y=gui_interval_up + gui_interval_each)
+        manga_range_button = tix.Button(self.manga_window, width=20, font=('Arial', 14), command=self.main_gui_start, text='开始', pady=10)
+        manga_range_button.place(x=500, y=gui_interval_up + gui_interval_each+7)
         balloon_massage.bind_widget(manga_range_button, balloonmsg='点击即可开始搜索下载')
 
         # 检查购买情况
         manga_check_button = tix.Button(self.manga_window, width=13, height=1, font=('Arial', 14), command=self.main_gui_check, text='检查购买', )
-        manga_check_button.place(x=470, y=gui_interval_up - 5)
+        manga_check_button.place(x=500, y=gui_interval_up - 5)
         balloon_massage.bind_widget(manga_check_button, balloonmsg='检查购买情况')
 
         # 更新cookie文件数据
         manga_check_button = tix.Button(self.manga_window, width=13, height=1, font=('Arial', 14), command=self.main_cookie_renovate, text='更新cookie储存', )
-        manga_check_button.place(x=627, y=gui_interval_up - 5)
+        manga_check_button.place(x=680 , y=gui_interval_up - 5)
         balloon_massage.bind_widget(manga_check_button, balloonmsg='点击此按钮可更新软件缓存文件中的cookie数据')
 
         # 中止按钮
-        manga_stop_button = tix.Button(self.manga_window, width=6, height=2, font=('Arial', 14), command=self.main_gui_stop, text='停止', )
-        manga_stop_button.place(x=704, y=gui_interval_up + gui_interval_each)
+        manga_stop_button = tix.Button(self.manga_window, width=6, font=('Arial', 14), command=self.main_gui_stop, text='停止',pady=10 )
+        manga_stop_button.place(x=770, y=gui_interval_up + gui_interval_each+7)
         balloon_massage.bind_widget(manga_stop_button, balloonmsg='启动自毁')
 
         # 进度条

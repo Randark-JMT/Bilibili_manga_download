@@ -41,8 +41,8 @@ class MainGUI:
         # 漫画ID输入框
         self.manga_id_label = tix.Label(self.manga_window, text='漫画ID=', font=('Arial', 12))
         self.manga_id_label.place(x=gui_interval_left, y=gui_interval_up + gui_interval_each)
-        self.manga_id_entry = tix.Entry(self.manga_window, show=None, font=('Arial', 14), exportselection=0, width=10)
-        self.manga_id_entry.place(x=100, y=gui_interval_up + gui_interval_each)
+        self.manga_id_entry = tix.Entry(self.manga_window, show=None, font=('Arial', 14), exportselection=0, width=13)
+        self.manga_id_entry.place(x=110, y=gui_interval_up + gui_interval_each)
         balloon_massage.bind_widget(self.manga_id_entry, balloonmsg='B站漫画链接中”mc”后面的5位数数字')
 
         # 漫画章节数据输入框
@@ -58,22 +58,22 @@ class MainGUI:
 
         # 开始按钮
         manga_range_button = tix.Button(self.manga_window, width=20, font=('Arial', 14), command=self.main_gui_start, text='开始', pady=10)
-        manga_range_button.place(x=500, y=gui_interval_up + gui_interval_each+7)
+        manga_range_button.place(x=540, y=gui_interval_up + gui_interval_each+7)
         balloon_massage.bind_widget(manga_range_button, balloonmsg='点击即可开始搜索下载')
 
         # 检查购买情况
         manga_check_button = tix.Button(self.manga_window, width=13, height=1, font=('Arial', 14), command=self.main_gui_check, text='检查购买', )
-        manga_check_button.place(x=500, y=gui_interval_up - 5)
+        manga_check_button.place(x=540, y=gui_interval_up - 5)
         balloon_massage.bind_widget(manga_check_button, balloonmsg='检查购买情况')
 
         # 更新cookie文件数据
         manga_check_button = tix.Button(self.manga_window, width=13, height=1, font=('Arial', 14), command=self.main_cookie_renovate, text='更新cookie储存', )
-        manga_check_button.place(x=680 , y=gui_interval_up - 5)
+        manga_check_button.place(x=720 , y=gui_interval_up - 5)
         balloon_massage.bind_widget(manga_check_button, balloonmsg='点击此按钮可更新软件缓存文件中的cookie数据')
 
         # 中止按钮
         manga_stop_button = tix.Button(self.manga_window, width=6, font=('Arial', 14), command=self.main_gui_stop, text='停止',pady=10 )
-        manga_stop_button.place(x=770, y=gui_interval_up + gui_interval_each+7)
+        manga_stop_button.place(x=810, y=gui_interval_up + gui_interval_each+7)
         balloon_massage.bind_widget(manga_stop_button, balloonmsg='启动自毁')
 
         # 进度条

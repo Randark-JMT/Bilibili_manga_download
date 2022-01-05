@@ -106,12 +106,12 @@ def download_manga_each(comic_id: int, section: int, text_output: ScrolledText):
         # 检查付费章节是否购买
         if not ep['is_locked']:
             # section_temp = int(ep['short_title'])
-            if int(ep['short_title']) == section:
+            if ep['short_title'] == str(section):
                 main_gui_log_insert('正在下载第' + ep['short_title'].rjust(3, '0') + '话：' + ep['title'] + '\n', text_output)
                 download_manga_episode(ep['id'], root_path, text_output)
-        else:
-            main_gui_log_insert('其余章节未下载' + '\n', text_output)
-            break
+            else:
+                print(ep['short_title'])
+    main_gui_log_insert('其余章节未下载' + '\n', text_output)
 
 
 # ID~索引下载漫画模块

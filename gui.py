@@ -53,7 +53,7 @@ class MainGUI:
         balloon_massage.bind_widget(self.manga_range_entry, balloonmsg='输入0为下载全部，单章直接输入，连续下载用“-”，可用逗号隔开，\n如“12，16-18”表示下载12，16，17，18话')
 
         # 控制台输出
-        self.manga_log_output = ScrolledText(self.manga_window, width=111, height=38, state='disabled')
+        self.manga_log_output = ScrolledText(self.manga_window, width=97, height=28, state='disabled')
         self.manga_log_output.place(x=0, y=gui_interval_up + gui_interval_each * 3)
 
         # 开始按钮

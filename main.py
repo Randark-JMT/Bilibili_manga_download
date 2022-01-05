@@ -1,11 +1,13 @@
 import ctypes
-
 from gui import MainGUI
 from tkinter.tix import Tk
 from settings import cookie_file, download_path
+import sys
 import os
 
 if __name__ == '__main__':
+    if hasattr(sys, 'frozen'):
+        os.environ['PATH'] = sys._MEIPASS + ";" + os.environ['PATH']
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
     ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
     if not os.path.exists(download_path):

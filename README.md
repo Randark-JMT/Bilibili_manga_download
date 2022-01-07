@@ -1,6 +1,9 @@
 ![程序图标](https://raw.githubusercontent.com/Randark-JMT/Bilibili_manga_download/dev-tkinker/main.ico "ico")
 # B站漫画下载器
 哔哩哔哩漫画下载工具， 支持范围下载
+
+~~注意，由于tk库未来可能会停止维护，故tkinter的开发分支将于近期完成bug修复和界面完善后停止更新。~~
+
 ## 项目特点
 1：拥有图形界面（易用程度大幅度提升） <br />
 2：支持多样的下载范围自定义 <br />

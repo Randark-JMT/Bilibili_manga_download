@@ -1,5 +1,4 @@
 from tkinter import tix, StringVar
-# from tkinter import END
 from tkinter.scrolledtext import ScrolledText
 from download_gui import download_main, download_purchase_status
 from settings import cookie_file
@@ -17,7 +16,7 @@ class MainGUI:
         self.manga_window.wm_protocol("WM_DELETE_WINDOW", lambda self_self=self: self.quitcmd())
         # self.manga_window.minsize(800, 600)  # 最小尺寸
         # self.manga_window.maxsize(800,600)
-        self.manga_window.title('Bilibili漫画下载    V1.2    仅限Mox内部使用')
+        self.manga_window.title('Bilibili漫画下载    V1.3    仅限Mox内部使用')
         balloon_massage = tix.Balloon(w)
         # 窗口元素对齐
         gui_interval_left: int = 25
@@ -37,7 +36,6 @@ class MainGUI:
         file = open(cookie_file, 'r')
         manga_sessdata_entry_text.set(file.read())
         file.close()
-
         # 漫画ID输入框
         self.manga_id_label = tix.Label(self.manga_window, text='漫画ID=', font=('Arial', 12))
         self.manga_id_label.place(x=gui_interval_left, y=gui_interval_up + gui_interval_each)

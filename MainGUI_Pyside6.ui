@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>848</width>
-    <height>667</height>
+    <width>774</width>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>421</width>
-      <height>131</height>
+      <width>411</width>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -60,71 +60,10 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>791</width>
-      <height>451</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>8</width>
-      <height>8</height>
-     </size>
-    </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>漫画信息</string>
-     </attribute>
-     <widget class="QTreeWidget" name="treeWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>751</width>
-        <height>401</height>
-       </rect>
-      </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::DefaultContextMenu</enum>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>输出日志</string>
-     </attribute>
-     <widget class="QTextBrowser" name="textBrowser">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>761</width>
-        <height>371</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>610</x>
       <y>20</y>
       <width>141</width>
       <height>41</height>
@@ -137,7 +76,7 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>440</x>
       <y>20</y>
       <width>161</width>
       <height>41</height>
@@ -150,7 +89,7 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>440</x>
       <y>90</y>
       <width>151</width>
       <height>41</height>
@@ -163,7 +102,7 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>620</x>
       <y>80</y>
       <width>121</width>
       <height>41</height>
@@ -172,6 +111,21 @@
     <property name="text">
      <string>中断</string>
     </property>
+   </widget>
+   <widget class="QTreeWidget" name="treeWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>150</y>
+      <width>751</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string notr="true">1</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>802</width>
+    <width>770</width>
     <height>598</height>
    </rect>
   </property>
@@ -17,9 +17,9 @@
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>10</y>
-      <width>421</width>
+      <width>411</width>
       <height>121</height>
      </rect>
     </property>
@@ -45,14 +45,14 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="1">
+      <widget class="QTextEdit" name="textEdit_2"/>
+     </item>
      <item row="0" column="1">
-      <widget class="QPlainTextEdit" name="plainTextEdit"/>
+      <widget class="QTextEdit" name="textEdit"/>
      </item>
      <item row="1" column="1">
-      <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
+      <widget class="QTextEdit" name="textEdit_3"/>
      </item>
     </layout>
    </widget>
@@ -60,9 +60,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>160</y>
       <width>781</width>
-      <height>431</height>
+      <height>421</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -72,22 +72,27 @@
      <attribute name="title">
       <string>漫画信息</string>
      </attribute>
-     <widget class="QTreeView" name="treeView">
+     <widget class="QTreeWidget" name="treeWidget">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>20</y>
-        <width>741</width>
+        <width>731</width>
         <height>361</height>
        </rect>
       </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>输出日志</string>
      </attribute>
-     <widget class="QListView" name="listView">
+     <widget class="QTextBrowser" name="textBrowser">
       <property name="geometry">
        <rect>
         <x>10</x>

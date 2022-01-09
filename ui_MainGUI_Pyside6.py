@@ -16,20 +16,20 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView, QLabel,
-    QListView, QMainWindow, QPlainTextEdit, QPushButton,
-    QSizePolicy, QStatusBar, QTabWidget, QTreeView,
-    QWidget)
+    QMainWindow, QPushButton, QSizePolicy, QStatusBar,
+    QTabWidget, QTextBrowser, QTextEdit, QTreeWidget,
+    QTreeWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(802, 598)
+        MainWindow.resize(770, 598)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.formLayoutWidget = QWidget(self.centralwidget)
         self.formLayoutWidget.setObjectName(u"formLayoutWidget")
-        self.formLayoutWidget.setGeometry(QRect(10, 10, 421, 121))
+        self.formLayoutWidget.setGeometry(QRect(20, 10, 411, 121))
         self.formLayout = QFormLayout(self.formLayoutWidget)
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setContentsMargins(0, 0, 0, 0)
@@ -48,35 +48,38 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
 
-        self.plainTextEdit = QPlainTextEdit(self.formLayoutWidget)
-        self.plainTextEdit.setObjectName(u"plainTextEdit")
+        self.textEdit_2 = QTextEdit(self.formLayoutWidget)
+        self.textEdit_2.setObjectName(u"textEdit_2")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.plainTextEdit)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.textEdit_2)
 
-        self.plainTextEdit_2 = QPlainTextEdit(self.formLayoutWidget)
-        self.plainTextEdit_2.setObjectName(u"plainTextEdit_2")
+        self.textEdit = QTextEdit(self.formLayoutWidget)
+        self.textEdit.setObjectName(u"textEdit")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.plainTextEdit_2)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.textEdit)
 
-        self.plainTextEdit_3 = QPlainTextEdit(self.formLayoutWidget)
-        self.plainTextEdit_3.setObjectName(u"plainTextEdit_3")
+        self.textEdit_3 = QTextEdit(self.formLayoutWidget)
+        self.textEdit_3.setObjectName(u"textEdit_3")
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.plainTextEdit_3)
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.textEdit_3)
 
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(10, 150, 781, 431))
+        self.tabWidget.setGeometry(QRect(10, 160, 781, 421))
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
-        self.treeView = QTreeView(self.tab)
-        self.treeView.setObjectName(u"treeView")
-        self.treeView.setGeometry(QRect(20, 20, 741, 361))
+        self.treeWidget = QTreeWidget(self.tab)
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"1");
+        self.treeWidget.setHeaderItem(__qtreewidgetitem)
+        self.treeWidget.setObjectName(u"treeWidget")
+        self.treeWidget.setGeometry(QRect(10, 20, 731, 361))
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
-        self.listView = QListView(self.tab_2)
-        self.listView.setObjectName(u"listView")
-        self.listView.setGeometry(QRect(10, 20, 761, 371))
+        self.textBrowser = QTextBrowser(self.tab_2)
+        self.textBrowser.setObjectName(u"textBrowser")
+        self.textBrowser.setGeometry(QRect(10, 20, 761, 371))
         self.tabWidget.addTab(self.tab_2, "")
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")

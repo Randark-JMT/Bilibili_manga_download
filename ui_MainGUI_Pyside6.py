@@ -15,21 +15,21 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView, QLabel,
-    QMainWindow, QPushButton, QSizePolicy, QStatusBar,
-    QTabWidget, QTextBrowser, QTextEdit, QTreeWidget,
-    QTreeWidgetItem, QWidget)
+from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QHeaderView,
+    QLabel, QMainWindow, QPushButton, QSizePolicy,
+    QStatusBar, QTabWidget, QTextBrowser, QTextEdit,
+    QTreeWidget, QTreeWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(770, 598)
+        MainWindow.resize(848, 667)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.formLayoutWidget = QWidget(self.centralwidget)
         self.formLayoutWidget.setObjectName(u"formLayoutWidget")
-        self.formLayoutWidget.setGeometry(QRect(20, 10, 411, 121))
+        self.formLayoutWidget.setGeometry(QRect(10, 10, 421, 131))
         self.formLayout = QFormLayout(self.formLayoutWidget)
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setContentsMargins(0, 0, 0, 0)
@@ -65,15 +65,17 @@ class Ui_MainWindow(object):
 
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(10, 160, 781, 421))
+        self.tabWidget.setGeometry(QRect(10, 150, 791, 451))
+        self.tabWidget.setIconSize(QSize(8, 8))
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
         self.treeWidget = QTreeWidget(self.tab)
-        __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
-        self.treeWidget.setHeaderItem(__qtreewidgetitem)
         self.treeWidget.setObjectName(u"treeWidget")
-        self.treeWidget.setGeometry(QRect(10, 20, 731, 361))
+        self.treeWidget.setGeometry(QRect(20, 10, 751, 401))
+        self.treeWidget.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.treeWidget.setStyleSheet(u"")
+        self.treeWidget.setFrameShape(QFrame.StyledPanel)
+        self.treeWidget.setFrameShadow(QFrame.Sunken)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
@@ -111,6 +113,9 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u7528\u6237Cookie\uff1a", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u6f2b\u753bID\uff1a", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u8f7d\u8303\u56f4\uff1a", None))
+#if QT_CONFIG(whatsthis)
+        self.textEdit.setWhatsThis(QCoreApplication.translate("MainWindow", u"\u6d4b\u8bd5", None))
+#endif // QT_CONFIG(whatsthis)
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"\u6f2b\u753b\u4fe1\u606f", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"\u8f93\u51fa\u65e5\u5fd7", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58Cookie", None))

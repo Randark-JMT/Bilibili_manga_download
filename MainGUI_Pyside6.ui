@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
-    <height>598</height>
+    <width>848</width>
+    <height>667</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>10</y>
-      <width>411</width>
-      <height>121</height>
+      <width>421</width>
+      <height>131</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -49,7 +49,11 @@
       <widget class="QTextEdit" name="textEdit_2"/>
      </item>
      <item row="0" column="1">
-      <widget class="QTextEdit" name="textEdit"/>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="whatsThis">
+        <string>测试</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QTextEdit" name="textEdit_3"/>
@@ -60,13 +64,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>160</y>
-      <width>781</width>
-      <height>421</height>
+      <y>150</y>
+      <width>791</width>
+      <height>451</height>
      </rect>
     </property>
     <property name="currentIndex">
      <number>0</number>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>8</width>
+      <height>8</height>
+     </size>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -75,17 +85,24 @@
      <widget class="QTreeWidget" name="treeWidget">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>731</width>
-        <height>361</height>
+        <x>20</x>
+        <y>10</y>
+        <width>751</width>
+        <height>401</height>
        </rect>
       </property>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
+      <property name="contextMenuPolicy">
+       <enum>Qt::DefaultContextMenu</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">

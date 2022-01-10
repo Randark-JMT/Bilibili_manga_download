@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>411</width>
-      <height>121</height>
+      <width>431</width>
+      <height>131</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -63,10 +63,10 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>20</y>
-      <width>141</width>
-      <height>41</height>
+      <x>620</x>
+      <y>10</y>
+      <width>121</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -76,10 +76,10 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>20</y>
-      <width>161</width>
-      <height>41</height>
+      <x>460</x>
+      <y>10</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -89,27 +89,14 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>90</y>
-      <width>151</width>
-      <height>41</height>
+      <x>460</x>
+      <y>80</y>
+      <width>281</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
      <string>开始下载</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>80</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>中断</string>
     </property>
    </widget>
    <widget class="QTreeWidget" name="treeWidget">
@@ -121,11 +108,6 @@
       <height>441</height>
      </rect>
     </property>
-    <column>
-     <property name="text">
-      <string notr="true">1</string>
-     </property>
-    </column>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

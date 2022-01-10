@@ -1,15 +1,25 @@
 import json
 import requests
+import traceback
 from settings import headers, url_ComicDetail
+from PySide6.QtWidgets import *
 
 
-def download_purchase_status(comic_id: int, sessdata: str):  # 购买情况查询
+def get_purchase_status(comic_id: int, sessdata: str, log_output: QTreeWidget):  # 购买情况查询
     # cookie 数据读取
     sessdata = 'SESSDATA=' + sessdata
     headers['cookie'] = sessdata
-    res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
     data_rt = []
     # 数据解析
+    res = None
+    try:
+        res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
+    except Exception:
+        msg = QTreeWidgetItem(log_output)
+        msg.setText(0, "错误 获取漫画购买情况时出错")
+        errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
+        msg.setText(1, errmsg[0] + "\n" + errmsg[1])
+        return None
     data = json.loads(res.text)['data']
     data_rt.append([data['id'], data['title']])
     manga_list = data['ep_list']

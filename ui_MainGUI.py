@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainGUI_Pyside6.ui'
+## Form generated from reading UI file 'MainGUI.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.2
 ##
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.formLayoutWidget = QWidget(self.centralwidget)
         self.formLayoutWidget.setObjectName(u"formLayoutWidget")
-        self.formLayoutWidget.setGeometry(QRect(10, 10, 411, 121))
+        self.formLayoutWidget.setGeometry(QRect(10, 10, 431, 131))
         self.formLayout = QFormLayout(self.formLayoutWidget)
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setContentsMargins(0, 0, 0, 0)
@@ -64,20 +64,14 @@ class Ui_MainWindow(object):
 
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(610, 20, 141, 41))
+        self.pushButton.setGeometry(QRect(620, 10, 121, 61))
         self.pushButton_2 = QPushButton(self.centralwidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(440, 20, 161, 41))
+        self.pushButton_2.setGeometry(QRect(460, 10, 151, 61))
         self.pushButton_3 = QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(440, 90, 151, 41))
-        self.pushButton_4 = QPushButton(self.centralwidget)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(620, 80, 121, 41))
+        self.pushButton_3.setGeometry(QRect(460, 80, 281, 61))
         self.treeWidget = QTreeWidget(self.centralwidget)
-        __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
-        self.treeWidget.setHeaderItem(__qtreewidgetitem)
         self.treeWidget.setObjectName(u"treeWidget")
         self.treeWidget.setGeometry(QRect(10, 150, 751, 441))
         MainWindow.setCentralWidget(self.centralwidget)
@@ -101,6 +95,5 @@ class Ui_MainWindow(object):
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58Cookie", None))
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u67e5\u8be2\u8d2d\u4e70\u60c5\u51b5", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u4e0b\u8f7d", None))
-        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u4e2d\u65ad", None))
     # retranslateUi
 

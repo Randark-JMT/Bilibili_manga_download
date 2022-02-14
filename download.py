@@ -19,7 +19,7 @@ def get_purchase_status(comic_id: int, log_output: QTextBrowser):  # 购买情�
     except Exception:
         log_output.append("--*--*--*-- 错误 获取漫画购买情况时出错 --*--*--*--")
         errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
-        log_output.append(errmsg[0] + "\n" + errmsg[1])
+        log_output.append(errmsg[0] + "-" + errmsg[1])
         if errmsg[0] == "requests.exceptions.SSLError":
             log_output.append("请检查网络连接情况，并尝试关闭网络代理")
         return None

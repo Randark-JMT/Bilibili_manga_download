@@ -20,43 +20,29 @@
       <x>10</x>
       <y>10</y>
       <width>431</width>
-      <height>131</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>用户Cookie：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>漫画ID：</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="0" column="1">
+      <widget class="QTextEdit" name="textEdit_3"/>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>下载范围：</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QTextEdit" name="textEdit_2"/>
-     </item>
-     <item row="0" column="1">
-      <widget class="QTextEdit" name="textEdit">
-       <property name="whatsThis">
-        <string>测试</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
-      <widget class="QTextEdit" name="textEdit_3"/>
+      <widget class="QTextEdit" name="textEdit_2"/>
      </item>
     </layout>
    </widget>
@@ -99,14 +85,19 @@
      <string>开始下载</string>
     </property>
    </widget>
-   <widget class="QTreeWidget" name="treeWidget">
+   <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>751</width>
-      <height>441</height>
+      <x>15</x>
+      <y>161</y>
+      <width>741</width>
+      <height>431</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
    </widget>
   </widget>

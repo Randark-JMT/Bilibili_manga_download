@@ -11,20 +11,15 @@ from settings import cookie_file, download_path
 class MainWindow(QMainWindow, Ui_MainWindow):
     @Slot()
     def check_purchase_staus(self):  # 检查购买情况
-        # QMessageBox.warning(self, "提示", "注意，此操作需要一定耗时，请耐心等待，不要随便关闭窗口\n开发者正在尝试解决此问题，请谅解。")
-        from downloader import get_purchase_status
-        data_rt = get_purchase_status(self.textEdit_3.toPlainText(), self.textEdit.toPlainText(), self.treeWidget)
-        if data_rt == None:
+        from download import get_purchase_status
+        data_re = get_purchase_status(self.textEdit_3.toPlainText(), self.textBrowser)
+        if data_re is None:
             return None
-        root = QTreeWidgetItem(self.treeWidget)
-        root.setText(0, "查询  " + str(data_rt[0][0]) + "-" + data_rt[0][1])
-        root.setText(1, "查询时间：" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        for data in data_rt[1:]:
-            msg = QTreeWidgetItem(root)
-            msg.setText(0, data[0])
-            msg.setText(1, data[1])
-        self.treeWidget.expandItem(root)
-        self.treeWidget.scrollToBottom()
+        # TODO 做个防呆，避免用户非法输入
+        self.textBrowser.append("查询  " + str(data_re[0][0]) + "-" + data_re[0][1])
+        self.textBrowser.append("查询时间：" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        for data in data_re[1:]:
+            self.textBrowser.append(data[0] + data[1])
 
     @Slot()
     def cookie_renovate(self):  # 保存用户Cookie
@@ -42,21 +37,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not os.path.exists(cookie_file):
             file = open(cookie_file, 'w')
             file.close()
-        with open(cookie_file, 'r') as file:
-            sessdata = file.read()
-            self.textEdit.setText(sessdata)
 
     @Slot()
+    def download_manga(self):
+        from download import download_main
+        download_main(self, self.textEdit_3.toPlainText(), self.textEdit_2.toPlainText(), self.treeWidget)
+        # 这里传递了self对象，来达到了跨函数控制窗体的可能
+
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.check_datafile()
+        print(type(self))
         # 漫画信息窗口-初始化
-        self.treeWidget.setColumnCount(2)
-        self.treeWidget.setHeaderLabels(['字段', '数据'])
-        self.treeWidget.setColumnWidth(0, 300)
+        self.setAcceptDrops(True)
         self.pushButton_2.clicked.connect(self.check_purchase_staus)
         self.pushButton.clicked.connect(self.cookie_renovate)
+        self.pushButton_3.clicked.connect(self.download_manga)
 
 
 if __name__ == "__main__":

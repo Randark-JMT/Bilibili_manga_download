@@ -89,7 +89,7 @@ def download_manga_episode(episode_id: int, root_path: str, log_output: QTreeWid
 
 
 # 主下载模块
-def download_main(self, comic_id: int, download_range: str, log_output: QTreeWidget):
+def download_main(self, comic_id: int, download_range: str, log_output: QTextBrowser):
     # cookie 数据读取
     with open(settings.cookie_file, "r") as f:
         headers['cookie'] = f.read()

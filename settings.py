@@ -27,3 +27,8 @@ def get_cookie():
         sessdata_w = cookie_raw.find("SESSDATA")
         headers["cookie"] = cookie_raw[sessdata_w:sessdata_w + 9] + cookie_raw[sessdata_w + 10:sessdata_w + 42]
         print(headers["cookie"])
+
+
+if __name__ == "__main__":
+    import json
+    json.loads()

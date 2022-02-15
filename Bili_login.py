@@ -42,6 +42,9 @@ def islogin(session, log_append):
 
 
 def bzlogin(log_append):
+    """
+    在用户的临时文件夹内生成登陆二维码，并用默认程序打开二维码
+    """
     if not os.path.exists(settings.cookie_file):
         with open(settings.cookie_file, 'w') as f:
             f.write("")
@@ -70,7 +73,7 @@ def bzlogin(log_append):
             elif '-5' in str(qrcodedata['data']):
                 log_append('已扫码，请确认！')
             elif '-2' in str(qrcodedata['data']):
-                log_append('二维码已失效，请重新运行！')
+                log_append('二维码已失效，请重新运行程序！')
             elif 'True' in str(qrcodedata['status']):
                 log_append('已确认，登入成功！')
                 session.get(qrcodedata['data']['url'], headers=headers)
@@ -79,7 +82,6 @@ def bzlogin(log_append):
                 log_append('其他：' + qrcodedata)
             time.sleep(2)
         session.cookies.save()
-    return session
 
 
 if __name__ == '__main__':

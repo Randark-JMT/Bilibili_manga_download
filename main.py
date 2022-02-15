@@ -3,7 +3,7 @@ import sys
 import time
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import *
-from PySide6.QtCore import Slot, QThread, Signal, QObject,SignalInstance
+from PySide6.QtCore import Slot, QThread, Signal, QObject, SignalInstance
 from ui_MainGUI import Ui_MainWindow
 from settings import cookie_file, download_path
 
@@ -17,6 +17,7 @@ class Thread_Login(QThread):  # 扫码登录线程
     def run(self):
         from Bili_login import bzlogin
         bzlogin(self.signal.emit)
+        # TODO 加上信号锁
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -46,6 +47,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         download_main(self, self.textEdit_2.toPlainText(), self.textEdit_3.toPlainText(), self.textBrowser)
         # 这里传递了self对象，来达到了跨函数控制窗体的可能
 
+    @Slot()
+    def login_qrcode(self):  # 登录模块
+        self.thread_login.start()
+
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
@@ -55,17 +60,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.thread_login = Thread_Login()
         self.thread_login.signal.connect(self.log_append)
+        # 日志输出与信号系统相连接
+
         self.pushButton_2.clicked.connect(self.check_purchase_staus)  # 检查购买按钮
         self.pushButton.clicked.connect(self.login_qrcode)  # 扫码登录按钮
         self.pushButton_3.clicked.connect(self.download_manga)  # 开始下载按钮
 
     @Slot(str)
-    def log_append(self, words):
+    def log_append(self, words):  # 日志输出，用槽函数接受信号
         self.textBrowser.append(words)
         print(words)
-
-    def login_qrcode(self):
-        self.thread_login.start()
 
 
 if __name__ == "__main__":

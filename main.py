@@ -1,7 +1,6 @@
 import os
 import sys
 import time
-from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Slot, QThread, Signal, QObject, SignalInstance
 from ui_MainGUI import Ui_MainWindow
@@ -63,7 +62,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.textEdit_2.toPlainText() == "" or not self.textEdit_2.toPlainText().isnumeric():
             self.textBrowser.append("漫画ID输入错误，请检查输入")
             return None
-        if self.textEdit_3.toPlainText() == "" or not self.textEdit_3.toPlainText().isnumeric():
+        if self.textEdit_3.toPlainText() == "":
             self.textBrowser.append("下载范围输入错误，请检查输入")
             return None
         from settings import comic_dic
@@ -125,7 +124,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if __name__ == "__main__":
     app = QApplication()
-    app.setWindowIcon(QIcon("main.ico"))
     window = MainWindow()
     window.show()
     sys.exit(app.exec())

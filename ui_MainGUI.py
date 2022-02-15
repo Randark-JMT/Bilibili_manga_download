@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QStatusBar, QTextBrowser,
     QTextEdit, QWidget)
+import main_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -28,6 +29,9 @@ class Ui_MainWindow(object):
         font = QFont()
         font.setPointSize(5)
         MainWindow.setFont(font)
+        icon = QIcon()
+        icon.addFile(u":/main.ico", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setIconSize(QSize(25, 25))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")

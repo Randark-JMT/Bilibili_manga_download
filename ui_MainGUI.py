@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'MainGUI.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.2
+## Created by: Qt User Interface Compiler version 6.2.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(770, 610)
+        MainWindow.resize(815, 652)
         MainWindow.setMinimumSize(QSize(770, 610))
         font = QFont()
         font.setPointSize(5)
@@ -57,13 +57,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.pushButton_3, 1, 3, 1, 4)
 
-        self.textEdit_2 = QTextEdit(self.centralwidget)
-        self.textEdit_2.setObjectName(u"textEdit_2")
-        self.textEdit_2.setMaximumSize(QSize(16777215, 70))
-        self.textEdit_2.setFont(font2)
-
-        self.gridLayout.addWidget(self.textEdit_2, 0, 1, 1, 1)
-
         self.textEdit_3 = QTextEdit(self.centralwidget)
         self.textEdit_3.setObjectName(u"textEdit_3")
         self.textEdit_3.setMinimumSize(QSize(0, 60))
@@ -95,6 +88,34 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.pushButton_2, 0, 3, 1, 3)
 
+        self.textEdit_2 = QTextEdit(self.centralwidget)
+        self.textEdit_2.setObjectName(u"textEdit_2")
+        self.textEdit_2.setMaximumSize(QSize(16777215, 70))
+        self.textEdit_2.setFont(font2)
+
+        self.gridLayout.addWidget(self.textEdit_2, 0, 1, 1, 1)
+
+        self.pushButton_4 = QPushButton(self.centralwidget)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setMinimumSize(QSize(70, 70))
+        self.pushButton_4.setFont(font2)
+
+        self.gridLayout.addWidget(self.pushButton_4, 4, 0, 1, 1)
+
+        self.pushButton_5 = QPushButton(self.centralwidget)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+        self.pushButton_5.setMinimumSize(QSize(0, 70))
+        self.pushButton_5.setFont(font2)
+
+        self.gridLayout.addWidget(self.pushButton_5, 4, 1, 1, 1)
+
+        self.pushButton_6 = QPushButton(self.centralwidget)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+        self.pushButton_6.setMinimumSize(QSize(0, 70))
+        self.pushButton_6.setFont(font2)
+
+        self.gridLayout.addWidget(self.pushButton_6, 4, 3, 1, 4)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -112,5 +133,8 @@ class Ui_MainWindow(object):
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u6f2b\u753bID\uff1a", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u626b\u7801\u767b\u5f55", None))
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u67e5\u8be2\u8d2d\u4e70\u60c5\u51b5", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u7a7a\u65e5\u5fd7", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u6ed1\u81f3\u65e5\u5fd7\u5e95\u90e8", None))
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u505c\u6b62\u4e0b\u8f7d", None))
     # retranslateUi
 

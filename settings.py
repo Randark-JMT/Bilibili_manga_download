@@ -1,5 +1,3 @@
-import random
-
 download_path = './B站漫画下载'
 cookie_file = './B站漫画下载/cookie.txt'
 url_ImageToken = 'https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web'
@@ -19,6 +17,8 @@ headers_cdn = {
     'Host': 'manga.hdslb.com',
     'Origin': 'https://manga.bilibili.com',
 }
+comic_dic = {"id": 0, "range": 0}
+flag="JMT{Just_For_FUn}"
 
 
 def get_cookie():
@@ -26,9 +26,10 @@ def get_cookie():
         cookie_raw = f.read()
         sessdata_w = cookie_raw.find("SESSDATA")
         headers["cookie"] = cookie_raw[sessdata_w:sessdata_w + 9] + cookie_raw[sessdata_w + 10:sessdata_w + 42]
-        print(headers["cookie"])
+        # print(headers["cookie"])
 
 
 if __name__ == "__main__":
     import json
+
     json.loads()

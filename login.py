@@ -82,6 +82,7 @@ def bzlogin(log_append):
                 log_append('其他：' + qrcodedata)
             time.sleep(2)
         session.cookies.save()
+    log_append("0xe1")
 
 
 if __name__ == '__main__':

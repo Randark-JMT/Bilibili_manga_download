@@ -2,62 +2,75 @@ import json
 import os
 import requests
 import traceback
-import time
 import settings
 from decode import decode_index_data, get_image_url
 from settings import headers, url_ComicDetail, download_path, url_GetEpisode, url_GetImageIndex
-from PySide6.QtWidgets import *
+# TODO 加入代理设置
 
 
-def get_purchase_status(comic_id: int, log_output: QTextBrowser):  # 购买情况查询
+def get_data(url, data, headers_user, log_out):  # 网络数据获取
+    try:
+        res = requests.post(url, data, headers=headers_user)
+    except Exception:
+        log_out("--+--+--+-- 错误 网络通信时出错 --+--+--+--")
+        errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
+        log_out(errmsg[0] + "-" + errmsg[1])
+        if errmsg[0] == "requests.exceptions.SSLError":
+            log_out("请检查网络连接情况，并尝试关闭网络代理")
+        return None
+    return res
+
+
+def get_purchase_status(comic_id: int, log_out):  # 购买情况查询
     # cookie 数据读取
     settings.get_cookie()
     data_rt = []
     # 数据解析
-    try:
-        res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
-    except Exception:
-        log_output.append("--*--*--*-- 错误 获取漫画购买情况时出错 --*--*--*--")
-        errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
-        log_output.append(errmsg[0] + "-" + errmsg[1])
-        if errmsg[0] == "requests.exceptions.SSLError":
-            log_output.append("请检查网络连接情况，并尝试关闭网络代理")
+    data_re = get_data(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers, log_out)
+    if data_re is None:
         return None
-    data = json.loads(res.text)['data']
+    try:
+        data = json.loads(data_re.text)['data']
+    except Exception:
+        log_out("--*--*--*-- 错误 漫画数据解析时出错 --*--*--*--")
+        log_out("请检查输入的数据是否正确")
+        return None
     data_rt.append([data['id'], data['title']])
     manga_list = data['ep_list']
     manga_list.reverse()
+    ep_order: int = 1
     for ep in manga_list:
         data_rt_per = []
         if ep['short_title'].isnumeric():
-            data_rt_per.append('第' + ep['short_title'].rjust(3, '0') + '话—' + ep['title'])
+            data_rt_per.append("#" + str(ep_order).rjust(3, "0") + "#  " + '第' + ep['short_title'].rjust(3, '0') + '话—' + ep['title'])
             if ep['is_locked']:
                 data_rt_per.append('：未购买')
             else:
                 data_rt_per.append('：已购买')
         else:
-            data_rt_per.append(ep['short_title'] + '—' + ep['title'])
+            data_rt_per.append("#" + str(ep_order).rjust(3, "0") + "#  " + ep['short_title'] + '—' + ep['title'])
             if ep['is_locked']:
                 data_rt_per.append('：未购买')
             else:
                 data_rt_per.append('：已购买')
         data_rt.append(data_rt_per)
+        ep_order += 1
     return data_rt
 
 
-def download_manga_episode(episode_id: int, root_path: str, log_output):  # ID-索引下载漫画模块
+def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索引下载漫画模块
     try:
         res = requests.post(url_GetEpisode, json.dumps({"id": episode_id}), headers=headers)
     except Exception:
-        log_output("错误 下载漫画时出错")
+        log_out("--+--+--+-- 错误 网络通信时出错 --+--+--+--")
         errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
-        log_output(errmsg[0] + "\n" + errmsg[1])
+        log_out(errmsg[0] + "\n" + errmsg[1])
         return None
     data = json.loads(res.text)
     short_title = data['data']['short_title']
     title = short_title + '_' + data['data']['title']
     comic_id = data['data']['comic_id']
-    log_output('正在下载：' + title)
+    log_out('正在下载：' + title)
 
     # 获取索引文件cdn位置
     res = requests.post(url_GetImageIndex, json.dumps({"ep_id": episode_id}), headers=headers)
@@ -69,12 +82,12 @@ def download_manga_episode(episode_id: int, root_path: str, log_output):  # ID-�
     # 解析索引文件
     pics = decode_index_data(comic_id, episode_id, res.content)
     # 文件储存
-    ep_path = os.path.join(root_path, title)
+    ep_path = os.path.join(root_path, str(title).replace(" ", ""))
     if not os.path.exists(ep_path):
         os.makedirs(ep_path)
     for i, e in enumerate(pics):
         url = get_image_url(e)
-        log_output('第' + str(i + 1) + '页 "下载成功"    ' + e)
+        log_out('第' + str(i + 1) + '页 "下载成功"    ' + e)
         res = requests.get(url)
         with open(os.path.join(ep_path, str(i + 1).rjust(3, '0') + '.jpg'), 'wb+') as f:
             f.write(res.content)
@@ -82,7 +95,7 @@ def download_manga_episode(episode_id: int, root_path: str, log_output):  # ID-�
         if i % 4 == 0 and i != 0:
             # time.sleep(1)
             pass
-    log_output("")
+    log_out("")
 
 
 def download_main(comic_id: int, download_range: str, log_output):  # 主下载模块
@@ -174,10 +187,7 @@ def download_manga_all(comic_id: int, log_out):
 
 
 def download_manga_each(comic_id: int, section: int, text_output):
-    # QMessageBox.information(self, "提示", "正在下载：" + str(comic_id) + "\t" + str(section) + "\n注意，此操作需要一定耗时，请耐心等待，不要随便关闭窗口\n开发者正在尝试解决此问题，请谅解。")
-    # url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
     res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
-    print(str(comic_id) + str(section))
     data = json.loads(res.text)['data']
     comic_title = data['title']
     # 漫画下载目录检查&创建
@@ -186,7 +196,7 @@ def download_manga_each(comic_id: int, section: int, text_output):
         os.makedirs(root_path)
     manga_list = data['ep_list']
     manga_list.reverse()
-
-    if not manga_list[section -1]['is_locked']:  # 检查付费章节是否购买
+    manga_section = manga_list[section - 1]
+    if not manga_section['is_locked']:  # 检查付费章节是否购买
         # main_gui_log_insert('正在下载第' + ep['short_title'].rjust(3, '0') + '话：' + ep['title'] + '\n', text_output)
-        download_manga_episode(manga_list[section -1]['id'], root_path, text_output)
+        download_manga_episode(manga_section['id'], root_path, text_output)

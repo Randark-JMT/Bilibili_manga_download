@@ -39,7 +39,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if manga_id == "" or not manga_id.isnumeric():
             self.textBrowser.append("漫画ID输入错误，请核对后再次执行")
             return None
-        data_re = get_purchase_status(manga_id, self.textBrowser)
+        data_re = get_purchase_status(manga_id, self.textBrowser.append)
         if data_re is None:
             return None
         # TODO 做个防呆，避免用户非法输入
@@ -61,9 +61,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushButton_3.setEnabled(False)
         if self.textEdit_2.toPlainText() == "" or not self.textEdit_2.toPlainText().isnumeric():
             self.textBrowser.append("漫画ID输入错误，请检查输入")
+            self.pushButton_3.setEnabled(True)
             return None
         if self.textEdit_3.toPlainText() == "":
             self.textBrowser.append("下载范围输入错误，请检查输入")
+            self.pushButton_3.setEnabled(True)
             return None
         from settings import comic_dic
         comic_dic["id"] = self.textEdit_2.toPlainText()

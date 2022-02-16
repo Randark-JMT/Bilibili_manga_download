@@ -18,7 +18,7 @@ headers_cdn = {
     'Origin': 'https://manga.bilibili.com',
 }
 comic_dic = {"id": 0, "range": 0}
-flag="JMT{Just_For_FUn}"
+flag = "JMT{Just_For_FUn}"
 
 
 def get_cookie():

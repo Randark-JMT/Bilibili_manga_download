@@ -3,7 +3,6 @@ import numpy as np
 import zipfile
 import io
 from settings import url_ImageToken
-# 文件解码
 import requests
 
 from settings import headers

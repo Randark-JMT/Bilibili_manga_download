@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Bilibili漫画下载器  V1.4.0</string>
+   <string>Bilibili漫画下载器  V1.4.3</string>
   </property>
   <property name="windowIcon">
    <iconset resource="main.qrc">

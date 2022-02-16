@@ -2,10 +2,9 @@ import os
 import sys
 import time
 from PySide6.QtWidgets import *
-from PySide6.QtCore import Slot, QThread, Signal, QObject, SignalInstance
+from PySide6.QtCore import Slot, QThread, Signal
 from ui_MainGUI import Ui_MainWindow
 from settings import cookie_file, download_path
-import ctypes
 
 
 class Thread_Login(QThread):  # 扫码登录线程

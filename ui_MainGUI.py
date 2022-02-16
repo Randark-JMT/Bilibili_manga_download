@@ -131,7 +131,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Bilibili\u6f2b\u753b\u4e0b\u8f7d\u5668  V1.4.0", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Bilibili\u6f2b\u753b\u4e0b\u8f7d\u5668  V1.4.3", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u8f7d\u8303\u56f4\uff1a", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u4e0b\u8f7d", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u6f2b\u753bID\uff1a", None))

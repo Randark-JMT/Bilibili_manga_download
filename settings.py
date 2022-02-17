@@ -1,3 +1,4 @@
+version="v1.4.4"
 download_path = './B站漫画下载'
 cookie_file = './B站漫画下载/cookie.txt'
 url_ImageToken = 'https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web'
@@ -17,7 +18,6 @@ headers_cdn = {
     'Host': 'manga.hdslb.com',
     'Origin': 'https://manga.bilibili.com',
 }
-comic_dic = {"id": 0, "range": 0}
 flag = "JMT{Just_For_FUn}"
 
 

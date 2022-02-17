@@ -5,6 +5,8 @@ import traceback
 import settings
 from decode import decode_index_data, get_image_url
 from settings import headers, url_ComicDetail, download_path, url_GetEpisode, url_GetImageIndex
+
+
 # TODO 加入代理设置
 
 
@@ -59,19 +61,12 @@ def get_purchase_status(comic_id: int, log_out):  # 购买情况查询
 
 
 def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索引下载漫画模块
-    try:
-        res = requests.post(url_GetEpisode, json.dumps({"id": episode_id}), headers=headers)
-    except Exception:
-        log_out("--+--+--+-- 错误 网络通信时出错 --+--+--+--")
-        errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
-        log_out(errmsg[0] + "\n" + errmsg[1])
-        return None
-    data = json.loads(res.text)
+    data_re = get_data(url_GetEpisode, json.dumps({"id": episode_id}), headers, log_out)
+    data = json.loads(data_re.text)
     short_title = data['data']['short_title']
     title = short_title + '_' + data['data']['title']
     comic_id = data['data']['comic_id']
     log_out('正在下载：' + title)
-
     # 获取索引文件cdn位置
     res = requests.post(url_GetImageIndex, json.dumps({"ep_id": episode_id}), headers=headers)
     data = json.loads(res.text)
@@ -98,95 +93,65 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
     log_out("")
 
 
-def download_main(comic_id: int, download_range: str, log_output):  # 主下载模块
+def download_main(comic_id: int, download_range: str, log_out):  # 主下载模块
     # cookie 数据读取
     from settings import get_cookie
     get_cookie()
-    try:
-        res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
-    except Exception:
-        log_output.append("--*--*--*-- 错误 获取漫画信息时出错 --*--*--*--")
-        errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
-        log_output.append(errmsg[0] + "-" + errmsg[1])
-        if errmsg[0] == "requests.exceptions.SSLError":
-            log_output.append("请检查网络连接情况，并尝试关闭网络代理")
-        return None
-    comic_info = json.loads(res.text)['data']
-    log_output("正在下载 " + str(comic_info['id']) + "-" + str(comic_info['title']))
-    download_range.replace('，', ',')  # 防呆设计
-    download_range.replace('—', '-')
-    download_range.replace(" ", "")
+    data_re = get_data(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers, log_out)
+    comic_info = json.loads(data_re.text)['data']
+    log_out("正在下载 " + str(comic_info['id']) + "-" + str(comic_info['title']))
+    download_range = download_range.replace('，', ',')  # 防呆设计
+    download_range = download_range.replace('—', '-')
+    download_range = download_range.replace(" ", "")
     if download_range == '0':
-        download_manga_all(comic_id, log_output)
+        data = json.loads(data_re.text)['data']
+        comic_title = data['title']
+        # 漫画下载目录检查&创建
+        root_path = os.path.join(download_path, comic_title)
+        if not os.path.exists(root_path):
+            os.makedirs(root_path)
+        manga_list = data['ep_list']
+        manga_list.reverse()
+        # TODO 全部下载的进度条
+        for ep in manga_list:
+            # 检查付费章节是否购买
+            if not ep['is_locked']:
+                # log_out('正在下载第:' + ep['short_title'] + ep['title'])
+                download_manga_episode(ep['id'], root_path, log_out)
+            else:
+                log_out('第' + data['short_title'].rjust(3, '0') + '话—' + data['title'] + " 未购买，已跳过")
+                continue
+        log_out("--*--*--*-- 下载任务已完成 --*--*--*--")
+        log_out("0xe3")
         return None
     # 对用户输入的章节数据进行读取
-    start = int(0)  # 范围下载第一位
-    destination = int(0)  # 范围下载第二位
-    state = False  # 是否为批量下载
-    frequency = int(0)  # 第几位字符
-    for letter in download_range:
-        frequency = frequency + 1
-        if letter == ',':
-            if not state:
-                section = start
-                download_manga_each(comic_id, section, log_output)
-                continue
+    download_range = download_range.split(",")
+    for chunk in download_range:
+        chunk = chunk.split("-")
+        if len(chunk) == 2:
+            if not chunk[0].isnumeric() or not chunk[1].isnumeric():
+                log_out("下载范围输入错误，请检查输入")
+                log_out("0xe3")
+                return None
+            elif int(chunk[0]) >= int(chunk[1]):
+                log_out("下载范围输入错误，请检查输入")
+                log_out("0xe3")
+                return None
             else:
-                download_manga_range(comic_id, start, destination, log_output)
-                # 初始化控制变量
-                start = int(0)
-                destination = int(0)
-                state = False
-        elif letter == '-':
-            state = True
+                section = int(chunk[0])
+                while section <= int(chunk[1]):
+                    download_manga_each(comic_id, section, log_out)
+                    section += 1
+        elif chunk[0] == "":
             continue
         else:
-            if not state:
-                start = start * 10 + int(letter)
-                continue
-            if state:
-                destination = destination * 10 + int(letter)
-                continue
-    # 检查是否为最后一块
-    if frequency == len(download_range):
-        if not state:
-            section = start
-            download_manga_each(comic_id, section, log_output)
-        else:
-            download_manga_range(comic_id, start, destination, log_output)
-    log_output("--*--*--*-- 下载任务已完成 --*--*--*--")
-    log_output("0xe3")
+            download_manga_each(comic_id, int(chunk[0]), log_out)
+    log_out("--*--*--*-- 下载任务已完成 --*--*--*--")
+    log_out("0xe3")
+    return None
 
 
-def download_manga_range(comic_id: int, start: int, destination: int, log_output):
-    section: int = start
-    while section <= destination:
-        download_manga_each(comic_id, section, log_output)
-        section += 1
-
-
-def download_manga_all(comic_id: int, log_out):
-    # url = str("https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web")
-    res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
-    data = json.loads(res.text)['data']
-    comic_title = data['title']
-    # 漫画下载目录检查&创建
-    root_path = os.path.join(download_path, comic_title)
-    if not os.path.exists(root_path):
-        os.makedirs(root_path)
-    manga_list = data['ep_list']
-    manga_list.reverse()
-    # TODO 日志中尝试增加进度条
-    for ep in manga_list:
-        # 检查付费章节是否购买
-        if not ep['is_locked']:
-            # log_out('正在下载第:' + ep['short_title'] + ep['title'])
-            download_manga_episode(ep['id'], root_path, log_out)
-        else:
-            break
-
-
-def download_manga_each(comic_id: int, section: int, text_output):
+def download_manga_each(comic_id: int, section: int, log_out):
     res = requests.post(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers=headers)
     data = json.loads(res.text)['data']
     comic_title = data['title']
@@ -197,6 +162,9 @@ def download_manga_each(comic_id: int, section: int, text_output):
     manga_list = data['ep_list']
     manga_list.reverse()
     manga_section = manga_list[section - 1]
+    print(1)
     if not manga_section['is_locked']:  # 检查付费章节是否购买
-        # main_gui_log_insert('正在下载第' + ep['short_title'].rjust(3, '0') + '话：' + ep['title'] + '\n', text_output)
-        download_manga_episode(manga_section['id'], root_path, text_output)
+        # TODO 单章下载的进度条
+        download_manga_episode(manga_section['id'], root_path, log_out)
+    else:
+        log_out('第' + data['short_title'].rjust(3, '0') + '话—' + data['title'] + " 未购买，已跳过")

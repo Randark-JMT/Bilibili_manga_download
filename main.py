@@ -21,13 +21,14 @@ class Thread_Login(QThread):  # 扫码登录线程
 class Thread_Download(QThread):  # 下载线程
     signal = Signal(str)
 
-    def __init__(self):
+    def __init__(self, comic_id, comic_range):
         super().__init__()
+        self.comic_id = comic_id
+        self.comic_range = comic_range
 
     def run(self):
         from download import download_main
-        from settings import comic_dic
-        download_main(comic_dic["id"], comic_dic["range"], self.signal.emit)
+        download_main(self.comic_id, self.comic_range, self.signal.emit)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -48,7 +49,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser.append(data[0] + data[1])
 
     @Slot()
-    def check_datafile(self):  # 检查数据文件
+    def check_datafile(self):  # 启动时检查数据文件
         if not os.path.exists(download_path):
             os.makedirs(download_path)
         if not os.path.exists(cookie_file):
@@ -66,19 +67,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser.append("下载范围输入错误，请检查输入")
             self.pushButton_3.setEnabled(True)
             return None
-        from settings import comic_dic
-        comic_dic["id"] = self.textEdit_2.toPlainText()
-        comic_dic["range"] = self.textEdit_3.toPlainText()
+        self.thread_download = Thread_Download(self.textEdit_2.toPlainText(), self.textEdit_3.toPlainText())
+        self.thread_download.signal.connect(self.log_append)
         self.thread_download.start()
-        # 这里传递了self对象，来达到了跨函数控制窗体的可能
 
     @Slot()
-    def login_qrcode(self):  # 登录模块
+    def login_qrcode(self):  # 登录
+        self.thread_login = Thread_Login()
+        self.thread_login.signal.connect(self.log_append)
         self.pushButton.setEnabled(False)
         self.thread_login.start()
 
     @Slot()
-    def download_manga_stop(self):
+    def download_manga_stop(self):  # 下载中断
         self.thread_download.terminate()
         self.textBrowser.append("下载任务已被中断")
         self.pushButton_3.setEnabled(True)
@@ -95,32 +96,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser.append(words)
 
     @Slot()
-    def log_scroll_down(self):
+    def log_scroll_down(self):  # 日志下滑
         self.textBrowser.moveCursor(self.textBrowser.textCursor().End)
 
     @Slot()
-    def log_scroll_clear(self):
+    def log_clear(self):  # 日志清空
         self.textBrowser.setText("")
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
+        self.thread_login = None
+        self.thread_download = None
         self.setupUi(self)
+        from settings import version
+        self.setWindowTitle("Bilibili漫画下载器  " + version)
         self.check_datafile()
-        self.setAcceptDrops(True)
         # 漫画信息窗口-初始化
-
-        self.thread_login = Thread_Login()
-        self.thread_login.signal.connect(self.log_append)
-        self.thread_download = Thread_Download()
-        self.thread_download.signal.connect(self.log_append)
-        # 日志输出与信号系统相连接
 
         self.pushButton_2.clicked.connect(self.check_purchase_staus)  # 检查购买按钮
         self.pushButton.clicked.connect(self.login_qrcode)  # 扫码登录按钮
+        self.pushButton
         self.pushButton_3.clicked.connect(self.download_manga)  # 开始下载按钮
         self.pushButton_6.clicked.connect(self.download_manga_stop)  # 下载终止按钮
-        self.pushButton_5.clicked.connect(self.log_scroll_down)
-        self.pushButton_4.clicked.connect(self.log_scroll_clear)
+        self.pushButton_5.clicked.connect(self.log_scroll_down)  # 日志框下滑按钮
+        self.pushButton_4.clicked.connect(self.log_clear)  # 日志清零
 
 
 if __name__ == "__main__":

@@ -115,7 +115,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.pushButton_2.clicked.connect(self.check_purchase_staus)  # 检查购买按钮
         self.pushButton.clicked.connect(self.login_qrcode)  # 扫码登录按钮
-        self.pushButton
         self.pushButton_3.clicked.connect(self.download_manga)  # 开始下载按钮
         self.pushButton_6.clicked.connect(self.download_manga_stop)  # 下载终止按钮
         self.pushButton_5.clicked.connect(self.log_scroll_down)  # 日志框下滑按钮

@@ -10,7 +10,6 @@ import requests
 from io import BytesIO
 import http.cookiejar as cookielib
 from PIL import Image
-import os
 
 requests.packages.urllib3.disable_warnings()
 
@@ -55,12 +54,9 @@ def bzlogin(log_out):
     """
     在用户的临时文件夹内生成登陆二维码，并用默认程序打开二维码
     """
-    if not os.path.exists(settings.cookie_file):
-        with open(settings.cookie_file, 'w') as f:
-            f.write("")
     session = requests.session()
     session.cookies = cookielib.LWPCookieJar(filename=settings.cookie_file)
-    session, status = islogin(session, log_out)
+    session, status = islogin(session, log_out)  # status为是否登录的储存位
     if not status:
         try:
             getlogin = session.get('https://passport.bilibili.com/qrcode/getLoginUrl', headers=headers).json()
@@ -81,14 +77,11 @@ def bzlogin(log_out):
         img.save(a, 'png')
         png = a.getvalue()
         a.close()
-        t = showpng(png)
-        t.start()
-        tokenurl = 'https://passport.bilibili.com/qrcode/getLoginInfo'
+        showpng(png).start()
         while 1:
-            qrcodedata = session.post(tokenurl, data={'oauthKey': oauthKey, 'gourl': 'https://www.bilibili.com/'}, headers=headerss).json()
-            # log_append(qrcodedata)
+            qrcodedata = session.post('https://passport.bilibili.com/qrcode/getLoginInfo', data={'oauthKey': oauthKey, 'gourl': 'https://www.bilibili.com/'}, headers=headerss).json()
             if '-4' in str(qrcodedata['data']):
-                log_out('二维码未失效，请扫码！')
+                log_out('二维码未失效，请及时扫码！')
             elif '-5' in str(qrcodedata['data']):
                 log_out('已扫码，请确认！')
             elif '-2' in str(qrcodedata['data']):
@@ -96,6 +89,7 @@ def bzlogin(log_out):
             elif 'True' in str(qrcodedata['status']):
                 log_out('已确认，登入成功！')
                 session.get(qrcodedata['data']['url'], headers=headers)
+                islogin(session, log_out)
                 break
             else:
                 log_out('其他：' + qrcodedata)
@@ -105,4 +99,4 @@ def bzlogin(log_out):
 
 
 if __name__ == '__main__':
-    bzlogin()
+    bzlogin(print)

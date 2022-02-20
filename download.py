@@ -76,20 +76,19 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
     res = requests.get(index_url)
     # 解析索引文件
     pics = decode_index_data(comic_id, episode_id, res.content)
+    print(pics)
     # 文件储存
     ep_path = os.path.join(root_path, str(title).replace(" ", ""))
     if not os.path.exists(ep_path):
         os.makedirs(ep_path)
     for i, e in enumerate(pics):
-        url = get_image_url(e)
-        log_out('第' + str(i + 1) + '页 "下载成功"    ' + e)
-        res = requests.get(url)
         with open(os.path.join(ep_path, str(i + 1).rjust(3, '0') + '.jpg'), 'wb+') as f:
             f.write(res.content)
             pass
         if i % 4 == 0 and i != 0:
             # time.sleep(1)
             pass
+        log_out('第' + str(i + 1) + '页 "下载成功"    ' + e)
     log_out("")
 
 

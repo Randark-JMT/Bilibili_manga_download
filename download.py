@@ -71,24 +71,25 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
     res = requests.post(url_GetImageIndex, json.dumps({"ep_id": episode_id}), headers=headers)
     data = json.loads(res.text)
     index_url = 'https://manga.hdslb.com' + data['data']['path']
-    # print('获取索引文件cdn位置:', index_url)
+    log_out('获取索引文件cdn位置:' + index_url)
     # 获取索引文件
     res = requests.get(index_url)
     # 解析索引文件
     pics = decode_index_data(comic_id, episode_id, res.content)
-    print(pics)
     # 文件储存
     ep_path = os.path.join(root_path, str(title).replace(" ", ""))
     if not os.path.exists(ep_path):
         os.makedirs(ep_path)
     for i, e in enumerate(pics):
+        url = get_image_url(e)
+        res = requests.get(url)
         with open(os.path.join(ep_path, str(i + 1).rjust(3, '0') + '.jpg'), 'wb+') as f:
             f.write(res.content)
             pass
         if i % 4 == 0 and i != 0:
             # time.sleep(1)
             pass
-        log_out('第' + str(i + 1) + '页 "下载成功"    ' + e)
+        log_out('第' + str(i + 1).rjust(3, "0") + '页  "下载成功"    ' + e)
     log_out("")
 
 
@@ -161,7 +162,6 @@ def download_manga_each(comic_id: int, section: int, log_out):
     manga_list = data['ep_list']
     manga_list.reverse()
     manga_section = manga_list[section - 1]
-    print(1)
     if not manga_section['is_locked']:  # 检查付费章节是否购买
         # TODO 单章下载的进度条
         download_manga_episode(manga_section['id'], root_path, log_out)

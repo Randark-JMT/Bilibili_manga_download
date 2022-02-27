@@ -71,7 +71,7 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
     res = requests.post(url_GetImageIndex, json.dumps({"ep_id": episode_id}), headers=headers)
     data = json.loads(res.text)
     index_url = 'https://manga.hdslb.com' + data['data']['path']
-    log_out('获取索引文件cdn位置:' + index_url)
+    # log_out('获取索引文件cdn位置:' + index_url)
     # 获取索引文件
     res = requests.get(index_url)
     # 解析索引文件

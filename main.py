@@ -35,7 +35,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @Slot()
     def check_purchase_staus(self):  # 检查购买情况
         from download import get_purchase_status
-        manga_id = self.textEdit_2.toPlainText()
+        manga_id = str(self.textEdit_2.toPlainText()).replace("\n", "").replace(" ", "")
         if manga_id == "" or not manga_id.isnumeric():
             self.textBrowser.append("漫画ID输入错误，请核对后再次执行")
             return None

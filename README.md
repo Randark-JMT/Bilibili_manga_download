@@ -10,6 +10,15 @@
 1：拥有图形界面（易用程度大幅度提升） <br />
 2：支持多样的下载范围自定义 <br />
 3：支持付费漫画下载（前提是已经购买的漫画）
+
+## TODO
+- 优化处理时的循环结构 <br />
+- 增加高级设置（手动输入SESSDATA和网络代理） <br />
+- 优化扫码登录的方案 <br />
+- 整合设置数据为json对象，并生成设置文件 <br />
+- 尝试引入双线程下载加速
+- 写使用说明
+
 ## 其他项目引用
 图片解析部分来自 https://github.com/flaribbit/bilibili-manga-spider <br />
 下载逻辑参考 https://github.com/xuruoyu/bilibili_manga_downloader

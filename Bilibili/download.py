@@ -2,9 +2,8 @@ import json
 import os
 import requests
 import traceback
-import settings
-from decode import decode_index_data, get_image_url
-from settings import headers, url_ComicDetail, download_path, url_GetEpisode, url_GetImageIndex
+from Bilibili.decode import decode_index_data, get_image_url
+from Bilibili.settings import headers, url_ComicDetail, download_path, url_GetEpisode, url_GetImageIndex, get_cookie
 
 
 # TODO 加入代理设置
@@ -14,18 +13,18 @@ def get_data(url, data, headers_user, log_out):  # 网络数据获取
     try:
         res = requests.post(url, data, headers=headers_user)
     except Exception:
-        log_out("--+--+--+-- 错误 网络通信时出错 --+--+--+--")
+        log_out("0x00", "--+--+--+-- 错误 网络通信时出错 --+--+--+--")
         errmsg = traceback.format_exc(limit=3).split("\n")[-2].split(": ")
         log_out(errmsg[0] + "-" + errmsg[1])
         if errmsg[0] == "requests.exceptions.SSLError":
-            log_out("请检查网络连接情况，并尝试关闭网络代理")
+            log_out("0x00", "请检查网络连接情况，并尝试关闭网络代理")
         return None
     return res
 
 
 def get_purchase_status(comic_id: int, log_out):  # 购买情况查询
     # cookie 数据读取
-    settings.get_cookie()
+    get_cookie()
     data_rt = []
     # 数据解析
     data_re = get_data(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers, log_out)
@@ -34,8 +33,7 @@ def get_purchase_status(comic_id: int, log_out):  # 购买情况查询
     try:
         data = json.loads(data_re.text)['data']
     except Exception:
-        log_out("--*--*--*-- 错误 漫画数据解析时出错 --*--*--*--")
-        log_out("请检查输入的数据是否正确")
+        log_out("0x00", "--*--*--*-- 错误 漫画数据解析时出错 --*--*--*--\n请检查输入的数据是否正确")
         return None
     data_rt.append([data['id'], data['title']])
     manga_list = data['ep_list']
@@ -66,7 +64,7 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
     short_title = data['data']['short_title']
     title = short_title + '_' + data['data']['title']
     comic_id = data['data']['comic_id']
-    log_out('正在下载：' + title)
+    log_out("0x00", '正在下载：' + title)
     # 获取索引文件cdn位置
     res = requests.post(url_GetImageIndex, json.dumps({"ep_id": episode_id}), headers=headers)
     data = json.loads(res.text)
@@ -89,8 +87,8 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
         if i % 4 == 0 and i != 0:
             # time.sleep(1)
             pass
-        log_out('第' + str(i + 1).rjust(3, "0") + '页  "下载成功"    ' + e)
-    log_out("")
+        log_out("0x00", '第' + str(i + 1).rjust(3, "0") + '页  "下载成功"    ' + e)
+    log_out("0x00", "")
 
 
 def download_main(comic_id: int, download_range: str, log_out):  # 主下载模块
@@ -99,7 +97,7 @@ def download_main(comic_id: int, download_range: str, log_out):  # 主下载模�
     get_cookie()
     data_re = get_data(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers, log_out)
     comic_info = json.loads(data_re.text)['data']
-    log_out("正在下载 " + str(comic_info['id']) + "-" + str(comic_info['title']))
+    log_out("0x00", "正在下载 " + str(comic_info['id']) + "-" + str(comic_info['title']))
     download_range = download_range.replace('，', ',')  # 防呆设计
     download_range = download_range.replace('—', '-')
     download_range = download_range.replace(" ", "")
@@ -119,10 +117,9 @@ def download_main(comic_id: int, download_range: str, log_out):  # 主下载模�
                 # log_out('正在下载第:' + ep['short_title'] + ep['title'])
                 download_manga_episode(ep['id'], root_path, log_out)
             else:
-                log_out('第' + data['short_title'].rjust(3, '0') + '话—' + data['title'] + " 未购买，已跳过")
+                log_out("0x00", '第' + data['short_title'].rjust(3, '0') + '话—' + data['title'] + " 未购买，已跳过")
                 continue
-        log_out("--*--*--*-- 下载任务已完成 --*--*--*--")
-        log_out("0xe3")
+        log_out("0xe3", "--*--*--*-- 下载任务已完成 --*--*--*--")
         return None
     # 对用户输入的章节数据进行读取
     download_range = download_range.split(",")
@@ -130,12 +127,10 @@ def download_main(comic_id: int, download_range: str, log_out):  # 主下载模�
         chunk = chunk.split("-")
         if len(chunk) == 2:
             if not chunk[0].isnumeric() or not chunk[1].isnumeric():
-                log_out("下载范围输入错误，请检查输入")
-                log_out("0xe3")
+                log_out("0xe3", "下载范围输入错误，请检查输入")
                 return None
             elif int(chunk[0]) >= int(chunk[1]):
-                log_out("下载范围输入错误，请检查输入")
-                log_out("0xe3")
+                log_out("0xe3", "下载范围输入错误，请检查输入")
                 return None
             else:
                 section = int(chunk[0])
@@ -146,8 +141,7 @@ def download_main(comic_id: int, download_range: str, log_out):  # 主下载模�
             continue
         else:
             download_manga_each(comic_id, int(chunk[0]), log_out)
-    log_out("--*--*--*-- 下载任务已完成 --*--*--*--")
-    log_out("0xe3")
+    log_out("0xe3", "--*--*--*-- 下载任务已完成 --*--*--*--")
     return None
 
 
@@ -166,4 +160,4 @@ def download_manga_each(comic_id: int, section: int, log_out):
         # TODO 单章下载的进度条
         download_manga_episode(manga_section['id'], root_path, log_out)
     else:
-        log_out('第' + data['short_title'].rjust(3, '0') + '话—' + data['title'] + " 未购买，已跳过")
+        log_out("0x00", '第' + data['short_title'].rjust(3, '0') + '话—' + data['title'] + " 未购买，已跳过")

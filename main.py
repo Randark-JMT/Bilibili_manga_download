@@ -4,21 +4,34 @@ import time
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Slot, QThread, Signal
 from ui_MainGUI import Ui_MainWindow
-from settings import cookie_file, download_path
+import Bilibili.settings
+import logging
+import json
 
 
-class Thread_Login(QThread):  # 扫码登录线程
+class Log_Recoreer:
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+
+class Thread_Login(QThread):
+    """
+    扫码登录线程
+    """
     signal = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     def run(self):
-        from login import bzlogin
+        from Bilibili.login import bzlogin
         bzlogin(self.signal.emit)
 
 
-class Thread_Download(QThread):  # 下载线程
+class Thread_Download(QThread):
+    """
+    下载线程，传入漫画ID和下载范围
+    """
     signal = Signal(str)
 
     def __init__(self, comic_id, comic_range):
@@ -27,16 +40,45 @@ class Thread_Download(QThread):  # 下载线程
         self.comic_range = comic_range
 
     def run(self):
-        from download import download_main
+        from Bilibili.download import download_main
         download_main(self.comic_id, self.comic_range, self.signal.emit)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+
+    @Slot()
+    def check_datafile(self):  # 启动时检查数据文件
+        if not os.path.exists(Bilibili.settings.download_path):
+            os.makedirs(Bilibili.settings.download_path)
+        if not os.path.exists(Bilibili.settings.setting_file):
+            f = open(Bilibili.settings.setting_file, 'a+')
+            f.close()
+        text = Bilibili.settings.settintfile_read()
+        if len(text) > 0:
+            properties = json.loads(text)
+
+    @Slot()
+    def get_manga_id(self) -> int:
+        """
+        链接解析
+        """
+        from urllib.parse import urlparse
+        url = str(self.textEdit_2.toPlainText())
+        url = urlparse(url)
+        if url.netloc == 'manga.bilibili.com':
+            if str(url.path).find('mc') == -1:
+                self.textBrowser.append("未检测到漫画信息")
+                return -1
+        else:
+            self.textBrowser.append("链接输入错误，非B漫链接")
+            return -1
+        return int(str(url.path).split("/")[2][2:])
+
     @Slot()
     def check_purchase_staus(self):  # 检查购买情况
-        from download import get_purchase_status
-        manga_id = str(self.textEdit_2.toPlainText()).replace("\n", "").replace(" ", "")
-        if manga_id == "" or not manga_id.isnumeric():
+        from Bilibili.download import get_purchase_status
+        manga_id = self.get_manga_id()
+        if manga_id == -1:
             self.textBrowser.append("漫画ID输入错误，请核对后再次执行")
             return None
         data_re = get_purchase_status(manga_id, self.textBrowser.append)
@@ -47,14 +89,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.textBrowser.append("查询时间：" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         for data in data_re[1:]:
             self.textBrowser.append(data[0] + data[1])
-
-    @Slot()
-    def check_datafile(self):  # 启动时检查数据文件
-        if not os.path.exists(download_path):
-            os.makedirs(download_path)
-        if not os.path.exists(cookie_file):
-            file = open(cookie_file, 'w')
-            file.close()
 
     @Slot()
     def download_manga(self):  # 下载
@@ -85,15 +119,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushButton_3.setEnabled(True)
 
     @Slot(str)
-    def log_append(self, words):  # 日志输出，用槽函数接受信号
-        if words == "0xe1":
+    def log_append(self, status, message):  # 日志输出，用槽函数接受信号
+        if status == "0xe1":
             self.pushButton.setEnabled(True)
-        elif words == "0xe2":
+        if status == "0xe2":
             self.pushButton_2.setEnabled(True)
-        elif words == "0xe3":
+        if status == "0xe3":
             self.pushButton_3.setEnabled(True)
-        else:
-            self.textBrowser.append(words)
+        self.textBrowser.append(message)
 
     @Slot()
     def log_scroll_down(self):  # 日志下滑
@@ -108,7 +141,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.thread_login = None
         self.thread_download = None
         self.setupUi(self)
-        from settings import version
+        from Bilibili.settings import version
         self.setWindowTitle("Bilibili漫画下载器  " + version)
         self.check_datafile()
         # 漫画信息窗口-初始化

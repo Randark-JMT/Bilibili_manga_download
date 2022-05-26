@@ -3,15 +3,9 @@ import sys
 import time
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Slot, QThread, Signal
+import setting
 from ui_MainGUI import Ui_MainWindow
-import Bilibili.settings
-import logging
 import json
-
-
-class Log_Recoreer:
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
 
 
 class Thread_Login(QThread):
@@ -47,18 +41,22 @@ class Thread_Download(QThread):
 class MainWindow(QMainWindow, Ui_MainWindow):
 
     @Slot()
-    def check_datafile(self):  # 启动时检查数据文件
-        if not os.path.exists(Bilibili.settings.download_path):
-            os.makedirs(Bilibili.settings.download_path)
-        if not os.path.exists(Bilibili.settings.setting_file):
-            f = open(Bilibili.settings.setting_file, 'a+')
+    def datafile_check(self):
+        """
+        检查数据文件可访问性
+        """
+        from Bilibili.settings import download_path
+        if not os.path.exists(download_path):
+            os.makedirs(download_path)
+        if not os.path.exists(setting.setting_file):
+            f = open(setting.setting_file, 'a+')
             f.close()
-        text = Bilibili.settings.settintfile_read()
+        text = setting.settintfile_read()
         if len(text) > 0:
             properties = json.loads(text)
 
     @Slot()
-    def get_manga_id(self) -> int:
+    def manga_id_get(self) -> int:
         """
         链接解析
         """
@@ -75,9 +73,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return int(str(url.path).split("/")[2][2:])
 
     @Slot()
-    def check_purchase_staus(self):  # 检查购买情况
+    def purchase_staus_check(self):  # 检查购买情况
         from Bilibili.download import get_purchase_status
-        manga_id = self.get_manga_id()
+        manga_id = self.manga_id_get()
         if manga_id == -1:
             self.textBrowser.append("漫画ID输入错误，请核对后再次执行")
             return None
@@ -91,7 +89,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser.append(data[0] + data[1])
 
     @Slot()
-    def download_manga(self):  # 下载
+    def manga_download(self):  # 下载
         self.pushButton_3.setEnabled(False)
         if self.textEdit_2.toPlainText() == "" or not self.textEdit_2.toPlainText().isnumeric():
             self.textBrowser.append("漫画ID输入错误，请检查输入")
@@ -143,12 +141,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         from Bilibili.settings import version
         self.setWindowTitle("Bilibili漫画下载器  " + version)
-        self.check_datafile()
+        self.datafile_check()
         # 漫画信息窗口-初始化
 
-        self.pushButton_2.clicked.connect(self.check_purchase_staus)  # 检查购买按钮
+        self.pushButton_2.clicked.connect(self.purchase_staus_check)  # 检查购买按钮
         self.pushButton.clicked.connect(self.login_qrcode)  # 扫码登录按钮
-        self.pushButton_3.clicked.connect(self.download_manga)  # 开始下载按钮
+        self.pushButton_3.clicked.connect(self.manga_download)  # 开始下载按钮
         self.pushButton_6.clicked.connect(self.download_manga_stop)  # 下载终止按钮
         self.pushButton_5.clicked.connect(self.log_scroll_down)  # 日志框下滑按钮
         self.pushButton_4.clicked.connect(self.log_clear)  # 日志清零

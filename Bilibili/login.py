@@ -6,6 +6,8 @@ import requests
 from io import BytesIO
 from PIL import Image
 import json
+
+import setting
 import settings
 
 requests.packages.urllib3.disable_warnings()
@@ -22,7 +24,8 @@ class showpng(Thread):
 
 
 def islogin(log_out):
-    settings.headers["Cookie"] = "SESSDATA=" + str(settings.property_get('cookie', settings.properties))
+    from setting import properties_global
+    settings.headers["Cookie"] = "SESSDATA=" + str(settings.property_bilibili_get("cookie", properties_global))
     loginurl = requests.get("https://api.bilibili.com/x/web-interface/nav", verify=False, headers=settings.headers).json()
     if loginurl['code'] == 0:
         log_out('Cookies值有效，' + loginurl['data']['uname'] + '，已登录！')
@@ -33,6 +36,7 @@ def islogin(log_out):
 
 
 def bzlogin(log_out):
+    from setting import properties_global
     status = islogin(log_out)
     if not status:
         getlogin = requests.get('https://passport.bilibili.com/qrcode/getLoginUrl', headers=settings.headers).json()
@@ -61,7 +65,7 @@ def bzlogin(log_out):
                 log_out(requests.get(qrcodedata.json()['data']['url'], headers=settings.headers))
                 sessdata = str(qrcodedata.cookies.get_dict(".bilibili.com")["SESSDATA"])
                 log_out(sessdata)
-                settings.property_put("cookie", sessdata, settings.properties)
+                settings.property_bilibili_put("cookie", sessdata, properties_global)
                 break
             else:
                 log_out('其他：', qrcodedata.text)
@@ -70,14 +74,14 @@ def bzlogin(log_out):
 
 
 if __name__ == '__main__':
-    text = settings.settintfile_read()
+    text = setting.settintfile_read()
     if len(text) > 0:
-        settings.properties = json.loads(text)
+        setting.properties_global = json.loads(text)
 
 
-    def log_out(message, code=None):
+    def log_out_test(message, code=None):
         if code is None:
             print(message)
 
 
-    bzlogin(log_out)
+    bzlogin(log_out_test)

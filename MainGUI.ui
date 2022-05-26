@@ -61,7 +61,7 @@
      <widget class="QPushButton" name="pushButton">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>140</width>
         <height>70</height>
        </size>
       </property>
@@ -77,7 +77,7 @@
        </font>
       </property>
       <property name="text">
-       <string>扫码登录</string>
+       <string>B站扫码登录</string>
       </property>
      </widget>
     </item>
@@ -157,7 +157,7 @@
      <widget class="QPushButton" name="pushButton_2">
       <property name="minimumSize">
        <size>
-        <width>144</width>
+        <width>140</width>
         <height>70</height>
        </size>
       </property>

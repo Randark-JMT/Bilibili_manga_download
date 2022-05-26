@@ -1,5 +1,3 @@
-import json
-
 version = "v1.4.4"
 download_path = '../B站漫画下载'
 setting_file = 'setting.json'
@@ -26,47 +24,19 @@ headers_cdn = {
     'Host': 'manga.hdslb.com',
     'Origin': 'https://manga.bilibili.com',
 }
-properties = {}
 
 
-def settintfile_read():
+def property_bilibili_put(key, value, properties):
     """
-    读取设置文件所有内容
+    在bilibili域内，保存一个属性。如果key不存在，则创建；存在，则覆盖。
     """
-    f = open(setting_file, 'r')
-    json_text = f.read()
-    f.close()
-    return json_text
+    from setting import property_put
+    property_put(key, value, properties, domain="bilibili")
 
 
-def settingfile_write(json_text):
+def property_bilibili_get(key, properties):
     """
-    所有内容覆盖到设置文件中。
+    在bilibili域内，获取一个属性。如果不存在，则返回default。
     """
-    try:
-        f = open(setting_file, 'w')
-        f.write(json_text)
-        f.close()
-        return True
-    except Exception:
-        return False
-
-
-def property_put(key, value, properties_):
-    """
-    保存一个属性。如果key不存在，则创建；存在，则覆盖。
-    """
-    properties_[key] = value
-    json_text = json.dumps(properties_)
-    settingfile_write(json_text)
-    return properties_
-
-
-def property_get(key, properties_, default=None):
-    """
-    获取一个属性。如果不存在，则返回default。
-    """
-    if key in properties_:
-        return properties_.get(key)
-    else:
-        return default
+    from setting import property_get
+    return property_get(key, properties, domain="bilibili")

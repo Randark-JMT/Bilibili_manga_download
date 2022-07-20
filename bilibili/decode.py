@@ -2,10 +2,10 @@ import json
 import numpy as np
 import zipfile
 import io
-from Bilibili.settings import url_ImageToken
+from bilibili.settings import url_ImageToken
 import requests
 
-from Bilibili.settings import headers
+from bilibili.settings import headers
 
 
 def decode_index_data(season_id: int, episode_id: int, buf):

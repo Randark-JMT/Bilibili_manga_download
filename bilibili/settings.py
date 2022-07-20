@@ -40,3 +40,6 @@ def property_bilibili_get(key, properties):
     """
     from setting import property_get
     return property_get(key, properties, domain="bilibili")
+
+def get_cookie():
+    return None

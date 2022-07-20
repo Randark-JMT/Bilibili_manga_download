@@ -25,7 +25,7 @@
    <string/>
   </property>
   <property name="windowIcon">
-   <iconset resource="main.qrc">
+   <iconset resource="source/main.qrc">
     <normaloff>:/main.ico</normaloff>:/main.ico</iconset>
   </property>
   <property name="iconSize">
@@ -242,7 +242,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="main.qrc"/>
+  <include location="source/main.qrc"/>
  </resources>
  <connections/>
 </ui>

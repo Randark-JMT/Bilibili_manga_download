@@ -17,7 +17,7 @@ headers = {
 }
 headers_login = {
     'User-Agent': "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
-    'Host': 'passport.bilibili.com',
+    'Host': 'passport.Bilibili.com',
     'Referer': "https://passport.bilibili.com/login"
 }
 headers_cdn = {
@@ -31,7 +31,7 @@ def property_bilibili_put(key, value, properties):
     在bilibili域内，保存一个属性。如果key不存在，则创建；存在，则覆盖。
     """
     from setting import property_put
-    property_put(key, value, properties, domain="bilibili")
+    property_put(key, value, properties, domain="Bilibili")
 
 
 def property_bilibili_get(key, properties):
@@ -39,7 +39,7 @@ def property_bilibili_get(key, properties):
     在bilibili域内，获取一个属性。如果不存在，则返回default。
     """
     from setting import property_get
-    return property_get(key, properties, domain="bilibili")
+    return property_get(key, properties, domain="Bilibili")
 
 def get_cookie():
     return None

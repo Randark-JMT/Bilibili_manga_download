@@ -63,7 +63,7 @@ def bzlogin(log_out):
             elif qrcodedata.json()['status']:
                 log_out('已确认，登入成功！')
                 log_out(requests.get(qrcodedata.json()['data']['url'], headers=settings.headers))
-                sessdata = str(qrcodedata.cookies.get_dict(".bilibili.com")["SESSDATA"])
+                sessdata = str(qrcodedata.cookies.get_dict(".Bilibili.com")["SESSDATA"])
                 log_out(sessdata)
                 settings.property_bilibili_put("cookie", sessdata, properties_global)
                 break

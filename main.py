@@ -18,7 +18,7 @@ class Thread_Login(QThread):
         super().__init__()
 
     def run(self):
-        from bilibili.login import bzlogin
+        from Bilibili.login import bzlogin
         bzlogin(self.signal.emit)
 
 
@@ -34,7 +34,7 @@ class Thread_Download(QThread):
         self.comic_range = comic_range
 
     def run(self):
-        from bilibili.download import download_main
+        from Bilibili.download import download_main
         download_main(self.comic_id, self.comic_range, self.signal.emit)
 
 
@@ -45,7 +45,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         检查数据文件可访问性
         """
-        from bilibili.settings import download_path
+        from Bilibili.settings import download_path
         if not os.path.exists(download_path):
             os.makedirs(download_path)
         if not os.path.exists(setting.setting_file):
@@ -63,7 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         from urllib.parse import urlparse
         url = str(self.textEdit_2.toPlainText())
         url = urlparse(url)
-        if url.netloc == 'manga.bilibili.com':
+        if url.netloc == 'manga.Bilibili.com':
             if str(url.path).find('mc') == -1:
                 self.textBrowser.append("未检测到漫画信息")
                 return -1
@@ -74,7 +74,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @Slot()
     def purchase_staus_check(self):  # 检查购买情况
-        from bilibili.download import get_purchase_status
+        from Bilibili.download import get_purchase_status
         manga_id = self.manga_id_get()
         if manga_id == -1:
             self.textBrowser.append("漫画ID输入错误，请核对后再次执行")
@@ -139,7 +139,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.thread_login = None
         self.thread_download = None
         self.setupUi(self)
-        from bilibili.settings import version
+        from Bilibili.settings import version
         self.setWindowTitle("Bilibili漫画下载器  " + version)
         self.datafile_check()
         # 漫画信息窗口-初始化

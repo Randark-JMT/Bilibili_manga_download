@@ -2,8 +2,8 @@ import json
 import os
 import requests
 import traceback
-from bilibili.decode import decode_index_data, get_image_url
-from bilibili.settings import headers, url_ComicDetail, download_path, url_GetEpisode, url_GetImageIndex, get_cookie
+from Bilibili.decode import decode_index_data, get_image_url
+from Bilibili.settings import headers, url_ComicDetail, download_path, url_GetEpisode, url_GetImageIndex, get_cookie
 
 
 # TODO 加入代理设置
@@ -93,7 +93,7 @@ def download_manga_episode(episode_id: int, root_path: str, log_out):  # ID-索�
 
 def download_main(comic_id: int, download_range: str, log_out):  # 主下载模块
     # cookie 数据读取
-    from bilibili.settings import get_cookie
+    from Bilibili.settings import get_cookie
     get_cookie()
     data_re = get_data(url_ComicDetail, json.dumps({"comic_id": comic_id}), headers, log_out)
     comic_info = json.loads(data_re.text)['data']

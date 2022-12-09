@@ -2,24 +2,18 @@
 # *JMT* 漫画下载器
 哔哩哔哩漫画下载工具， 未来将支持更多的网站
 
-
-## 项目特点
-1：拥有图形界面（易用程度大幅度提升） <br />
-2：支持多样的下载范围自定义 <br />
-3：支持付费漫画下载（前提是已经购买的漫画）
-
-## 使用说明
-漫画id内填入B漫的id，如链接为`https://manga.bilibili.com/detail/mc28241` ,则id为`28241`
-漫画范围，填`0`则是会尝试下载所有章节，`14-16`表示下载14到16，`58`表示下载序号为58，可用逗号隔开不同的下载范围
+> 目前项目原有代码已被抛弃，整体项目将被重写
 
 ## TODO
-> 就目前而言，请使用release中的二进制版本，仓库中的代码还在进行开发，并非最终版本。预计未来会加上其他平台的支持，如鹰角网络
-- 增加高级设置，如手动输入SESSDATA和网络代理 <br />
-- 优化扫码登录的方案 <br />
-- 整合设置数据为json对象，并生成设置文件 <br />
-- 尝试引入双线程下载加速
-- 写使用说明
+- 软件界面设计
+- 各功能之间实现模块化，方便后续设计和调整
+- 实现对网址的自动解析，不再需要手动截取漫画id
+- 设计对Bilibili manga下载的逻辑
+- 设计Bilibili的登录接口（扫码登陆，浏览器登录和Cookie手动输入）
+- 添加鹰角网络（https://terra-historicus.hypergryph.com/）的下载解析
 
-## 开发中参考的其他项目
-图片解析部分来自 https://github.com/flaribbit/bilibili-manga-spider <br />
-下载逻辑参考 https://github.com/xuruoyu/bilibili_manga_downloader
+---
+
+## 开发时所参考的项目
+- 图片解析部分来自 https://github.com/flaribbit/bilibili-manga-spider
+- 下载逻辑参考 https://github.com/xuruoyu/bilibili_manga_downloader
